@@ -15,4 +15,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\font\font-awesome-pro-v6-6.2.0\.github\pull_request_template.md" />
+  </ItemGroup>
+
 </Project>
