@@ -21,7 +21,7 @@ namespace FoodOrderApp.Data
                 {
                     context.Foods.AddRange(new List<Food>()
                     {
-                        new Food()
+                        new Food
                         {
                             Id = "F001",
                             Name = "Nấm đùi gà xào cháy tỏi",
@@ -30,7 +30,7 @@ namespace FoodOrderApp.Data
                             Price = 200000,
                             FoodCategory = FoodCategory.MonMan
                         },
-                        new Food()
+                        new Food
                         {
                             Id = "F002",
                             Name = "Rau xào ngũ sắc",
@@ -48,11 +48,20 @@ namespace FoodOrderApp.Data
                             Price = 180000,
                             FoodCategory = FoodCategory.MonTrangMieng
                         },
-                        new Food()
+                        new Food
                         {
                             Id = "F004",
                             Name = "Set lẩu thái Tomyum",
                             Image = "~/img/products/lau_thai.jpg",
+                            Description = "Lẩu Thái là món ăn xuất phát từ món canh chua Tom yum nổi tiếng của Thái Lan. Nước lẩu có hương vị chua chua cay cay đặc trưng. Các món nhúng lẩu gồn thịt bò, hải sản, rau xanh và các loại nấm.",
+                            Price = 200000,
+                            FoodCategory = FoodCategory.MonMan
+                        },
+                        new Food
+                        {
+                            Id = "F005",
+                            Name = "Cơm chiên cua",
+                            Image = "~/img/products/com_chien_cua.png",
                             Description = "Lẩu Thái là món ăn xuất phát từ món canh chua Tom yum nổi tiếng của Thái Lan. Nước lẩu có hương vị chua chua cay cay đặc trưng. Các món nhúng lẩu gồn thịt bò, hải sản, rau xanh và các loại nấm.",
                             Price = 200000,
                             FoodCategory = FoodCategory.MonMan
@@ -181,7 +190,7 @@ namespace FoodOrderApp.Data
                             Image = "~/img/products/banh_cookie_dua.jpeg",
                             Description = "Bánh cookie dừa ngọt vừa miệng, dừa bào tươi nhào bánh nướng giòn tan, cắn vào thơm lừng, giòn rụm",
                             Price = 130000,
-                            FoodCategory = FoodCategory.MonMan
+                            FoodCategory = FoodCategory.MonAnVat
                         },
                         new Food
                         {
@@ -195,373 +204,93 @@ namespace FoodOrderApp.Data
                         new Food
                         {
                             Id = "F021",
-                            Name = "Gà chiên nước mắm Phan Thiết",
-                            Image = "~/img/products/ga_chien_phan_thiet.jpeg",
-                            Description = "Gà ta chiên giòn, nước mắm Phan Thiết thơm ngon, ăn kèm xôi mềm, ngon mắt",
-                            Price = 120000,
+                            Name = "Tôm sú rang muối",
+                            Image = "~/img/products/tom-su-rang-muoi.jpeg",
+                            Description = "Từng chú tôm sú được chọn lựa kĩ càng mỗi ngày, đảm bảo là tôm tươi sống, vẫn còn đang bơi khỏe. Tôm rang muối vừa đậm đà lại vẫn giữ được vị ngọt tự nhiên của tôm sú.",
+                            Price = 550000,
                             FoodCategory = FoodCategory.MonMan
                         },
                         new Food
                         {
                             Id = "F022",
-                            Name = "Bún riêu cua",
-                            Image = "~/img/products/bun_rieu_cua.jpeg",
-                            Description = "Bún riêu cua hấp dẫn với nước dùng thơm béo, cua tươi ngon, ăn kèm rau sống và bún mềm",
-                            Price = 95000,
+                            Name = "Tôm sú rang bơ tỏi (1 suất)",
+                            Image = "~/img/products/tom-su-rang-bo-toi.jpeg",
+                            Description = "Tôm được chiên vàng giòn bên ngoài, bên trong thịt tôm vẫn mềm, kết hợp cùng sốt bơ tỏi thơm nức . Tôm tươi được Bếp Hoa chiên theo bí quyết riêng nên phần thịt tôm bên trong sẽ có hương vị thơm ngon đặc biệt, sốt bơ tỏi béo ngậy hấp dẫn. Ăn kèm bánh mỳ rất hợp",
+                            Price = 550000,
                             FoodCategory = FoodCategory.MonMan
                         },
                         new Food
                         {
                             Id = "F023",
-                            Name = "Mì Quảng tôm thịt",
-                            Image = "~/img/products/mi_quang_tom_thit.jpeg",
-                            Description = "Mì Quảng tôm thịt đậm đà, ăn kèm nước lèo ngon, rau sống và bún giòn",
-                            Price = 85000,
+                            Name = "Combo Vịt quay và gỏi vịt",
+                            Image = "~/img/products/combo-vitquay-va-goivit.jpeg",
+                            Description = "Combo vịt quay Bếp Hoa + gỏi vịt bắp cải size đại cực kỳ thích hợp cho những bữa ăn cần nhiều rau, nhiều đạm mà vẫn đảm bảo ngon miệng. Vịt quay chuẩn Macao giòn da thấm thịt, thêm phần gỏi vịt chua chua ngọt ngọt, rau tươi giòn ăn chống ngán, cân bằng dinh dưỡng.",
+                            Price = 510000,
                             FoodCategory = FoodCategory.MonMan
                         },
                         new Food
                         {
                             Id = "F024",
-                            Name = "Bánh mì chảo",
-                            Image = "~/img/products/banh_mi_chao.jpeg",
-                            Description = "Bánh mì chảo giòn thơm, ăn kèm nước sốt cay nồng và thịt bò xay thơm ngon",
-                            Price = 75000,
+                            Name = "Set cá cơm tầm",
+                            Image = "~/img/products/set_ca_tam.jpg",
+                            Description = "Một 1 set với 3 món ngon mỹ mãn đủ 4 người ăn no, bếp trưởng tự tay chọn từng con cá tầm tươi đủ chất lượng để chế biến đủ 3 món gỏi, nướng, canh chua 10 điểm cho chất lượng.",
+                            Price = 950000,
                             FoodCategory = FoodCategory.MonMan
                         },
                         new Food
                         {
                             Id = "F025",
-                            Name = "Bánh mì pate sốt BBQ",
-                            Image = "~/img/products/banh_mi_pate_bbq.jpeg",
-                            Description = "Bánh mì pate sốt BBQ thơm ngon, ăn kèm rau sống và thịt gà bóp thơm",
-                            Price = 65000,
+                            Name = "Chả ốc 1 phần",
+                            Image = "~/img/products/cha_oc_1_phan.jpeg",
+                            Description = "Chả ốc với ốc giòn tan, băm rối, trộn với thịt, lá lốt, rau thơm, nêm nếm vừa ăn và viên tròn, chiên cho giòn ngoài mềm trong. Ăn chả ốc kẹp với rau sống và chấm mắm chua ngọt cực kỳ đưa vị.",
+                            Price = 350000,
                             FoodCategory = FoodCategory.MonMan
                         },
-
                         new Food
                         {
                             Id = "F026",
-                            Name = "Cơm rang dưa bò",
-                            Image = "~/img/products/com_rang_dua_bo.jpeg",
-                            Description = "Cơm rang dưa bò ngon mắt, thơm béo, ăn kèm rau sống và trứng chiên",
-                            Price = 90000,
+                            Name = "Gà ủ muối thảo mộc (1 con)",
+                            Image = "~/img/products/ga-u-muoi-thao-moc.png",
+                            Description = "Gà ủ muối tuyển chọn từ gà ri tươi, ủ muối chín tới với gia vị thảo mộc tự nhiên, da gà mỏng, thịt chắc ngọt.",
+                            Price = 450000,
                             FoodCategory = FoodCategory.MonMan
                         },
                         new Food
                         {
                             Id = "F027",
-                            Name = "Gỏi cá trích",
-                            Image = "~/img/products/goi_ca_trich.jpeg",
-                            Description = "Gỏi cá trích với nước mắm Phan Thiết thơm ngon, ăn kèm rau sống và bún mềm",
-                            Price = 85000,
+                            Name = "Gà không lối thoát (1 con)",
+                            Image = "~/img/products/ga-khong-loi-thoat.png",
+                            Description = "Gà mái ghẹ size 1.4kg sơ chế sạch sẽ, tẩm ướp gia vị đậm đà, bọc vào trong xôi dẻo từ nếp cái hoa vàng, chiên cho giòn mặt ngoài. Khi ăn cắt phần xôi là gà thơm ngon nghi ngút khói, thịt gà ngấm mềm thơm, miếng xôi ngọt tự nhiên từ thịt gà ăn cực kỳ hấp dẫn.",
+                            Price = 520000,
                             FoodCategory = FoodCategory.MonMan
                         },
                         new Food
                         {
                             Id = "F028",
-                            Name = "Bún bò Huế",
-                            Image = "~/img/products/bun_bo_hue.jpeg",
-                            Description = "Bún bò Huế đậm đà, thơm ngon, ăn kèm rau sống và bún giòn",
-                            Price = 110000,
+                            Name = "Cá chiên giòn mắm Thái (1 con)",
+                            Image = "~/img/products/ca-chien-gion-mam-thai.jpeg",
+                            Description = "Cá tươi bếp làm sạch, lạng đôi, ướp cho ngấm và chiên vàng giòn. Thịt cá bên trong óng ánh nước, mềm ngọt, bên ngoài giòn tan hấp dẫn. Thêm sốt mắm Thái đầu bếp làm công thức riêng, vị mắm chua ngọt cay the cực kỳ hợp với cá giòn nóng hổi.",
+                            Price = 350000,
                             FoodCategory = FoodCategory.MonMan
                         },
                         new Food
                         {
                             Id = "F029",
-                            Name = "Bánh mì trứng ốp-la",
-                            Image = "~/img/products/banh_mi_trung_op_la.jpeg",
-                            Description = "Bánh mì trứng ốp-la giòn thơm, ăn kèm nước sốt cay nồng và thịt bò xay thơm ngon",
-                            Price = 70000,
+                            Name = "Chân giò chiên giòn mắm Thái",
+                            Image = "~/img/products/chan-gio-chien-gion-mam-thai.jpeg",
+                            Description = "Chân giò lợn đen chọn loại ngon, tỉ lệ nạc mỡ đều đặn, bếp xâm bì cẩn thận và ướp thật ngon, chiên vàng giòn nổi bóng, khi ăn chấm mắm chua ngọt cay cay cực kỳ ngon miệng.",
+                            Price = 420000,
                             FoodCategory = FoodCategory.MonMan
                         },
                         new Food
                         {
                             Id = "F030",
-                            Name = "Bánh canh cua",
-                            Image = "~/img/products/banh_canh_cua.jpeg",
-                            Description = "Bánh canh cua hấp dẫn với nước dùng thơm béo, cua tươi ngon, ăn kèm rau sống và bún mềm",
-                            Price = 100000,
+                            Name = "Chả cốm (500gr)",
+                            Image = "~/img/products/cha-com.png",
+                            Description = "Cốm mộc làng Vòng hạt dẹt dẻo và thơm đặc biệt, thịt lợn tươi phải chọn phần thịt vai xay vừa mềm lại không bở, trộn đều với cốm, nêm với mắm ngon, gia vị đơn giản và quật hỗn hợp thịt xay và cốm đến khi nào thật chắc và dẻo. Viên mỗi bánh chả phải đều tay, hấp sơ qua cho thành hình, khi ăn mới chiên vàng. Chả cốm khi cắn vào phải giòn và lại thật mềm, tứa nước trong miệng. Cốm dẻo dẻo cuộn trong thịt thơm ngon lạ kỳ.",
+                            Price = 175000,
                             FoodCategory = FoodCategory.MonMan
-                        },
-                        new Food
-                        {
-                            Id = "F031",
-                            Name = "Phở bò tái",
-                            Image = "~/img/products/pho_bo_tai.jpeg",
-                            Description = "Phở bò tái nấu theo kiểu truyền thống, thơm ngon, ăn kèm rau sống và bún giòn",
-                            Price = 90000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-                        new Food
-                        {
-                            Id = "F032",
-                            Name = "Gỏi xoài tôm",
-                            Image = "~/img/products/goi_xoai_tom.jpeg",
-                            Description = "Gỏi xoài tôm ngon mắt, thơm ngon, ăn kèm rau sống và bún mềm",
-                            Price = 80000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-                        new Food
-                        {
-                            Id = "F033",
-                            Name = "Bánh mì cá mòi",
-                            Image = "~/img/products/banh_mi_ca_moi.jpeg",
-                            Description = "Bánh mì cá mòi giòn thơm, ăn kèm nước sốt cay nồng và thịt cá mòi xay thơm ngon",
-                            Price = 75000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-                        new Food
-                        {
-                            Id = "F034",
-                            Name = "Bún mắm cá linh",
-                            Image = "~/img/products/bun_mam_ca_linh.jpeg",
-                            Description = "Bún mắm cá linh hấp dẫn với nước mắm thơm ngon, cá linh tươi ngon, ăn kèm rau sống và bún mềm",
-                            Price = 95000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-                        new Food
-                        {
-                            Id = "F035",
-                            Name = "Lẩu mì cay Hàn Quốc",
-                            Image = "~/img/products/lau_mi_cay_han_quoc.jpeg",
-                            Description = "Lẩu mì cay Hàn Quốc thơm ngon, cay nồng, ăn kèm nước lèo và thịt bò thơm ngon",
-                            Price = 110000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-                        new Food
-                        {
-                            Id = "F036",
-                            Name = "Bánh mì chả cá",
-                            Image = "~/img/products/banh_mi_cha_ca.jpeg",
-                            Description = "Bánh mì chả cá giòn thơm, ăn kèm nước sốt cay nồng và chả cá thơm ngon",
-                            Price = 70000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-                        new Food
-                        {
-                            Id = "F037",
-                            Name = "Bún đậu mắm tôm",
-                            Image = "~/img/products/bun_dau_mam_tom.jpeg",
-                            Description = "Bún đậu mắm tôm ngon mắt, thơm béo, ăn kèm rau sống và bún giòn",
-                            Price = 85000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-                        new Food
-                        {
-                            Id = "F038",
-                            Name = "Gỏi cá trích xanh",
-                            Image = "~/img/products/goi_ca_trich_xanh.jpeg",
-                            Description = "Gỏi cá trích xanh với nước mắm Phan Thiết thơm ngon, ăn kèm rau sống và bún mềm",
-                            Price = 88000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-                        new Food
-                        {
-                            Id = "F039",
-                            Name = "Bánh mì pate sốt cay",
-                            Image = "~/img/products/banh_mi_pate_sot_cay.jpeg",
-                            Description = "Bánh mì pate sốt cay thơm ngon, ăn kèm rau sống và thịt gà bóp thơm",
-                            Price = 72000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-                        new Food
-                        {
-                            Id = "F040",
-                            Name = "Cơm chiên dưa bò",
-                            Image = "~/img/products/com_chien_dua_bo.jpeg",
-                            Description = "Cơm chiên dưa bò ngon mắt, thơm béo, ăn kèm rau sống và trứng chiên",
-                            Price = 95000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-                        new Food
-                        {
-                            Id = "F041",
-                            Name = "Gỏi cuốn tôm thịt",
-                            Image = "~/img/products/goi_cuon_tom_thit.jpeg",
-                            Description = "Gỏi cuốn tôm thịt tươi ngon, ăn kèm nước mắm pha chua ngọt và đậu phộng giã nhuyễn",
-                            Price = 78000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-                        new Food
-                        {
-                            Id = "F042",
-                            Name = "Bún ốc cay Hà Nội",
-                            Image = "~/img/products/bun_oc_cay_ha_noi.jpeg",
-                            Description = "Bún ốc cay Hà Nội thơm ngon, cay nồng, ăn kèm nước lèo và ốc tươi ngon",
-                            Price = 88000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-                        new Food
-                        {
-                            Id = "F043",
-                            Name = "Lẩu hải sản cay",
-                            Image = "~/img/products/lau_hai_san_cay.jpeg",
-                            Description = "Lẩu hải sản cay nồng, ăn kèm nước lèo và đủ loại hải sản tươi ngon",
-                            Price = 120000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-                        new Food
-                        {
-                            Id = "F044",
-                            Name = "Bánh mì bò kho",
-                            Image = "~/img/products/banh_mi_bo_kho.jpeg",
-                            Description = "Bánh mì bò kho thơm ngon, ăn kèm rau sống và thịt bò kho mềm ngon",
-                            Price = 85000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-                        new Food
-                        {
-                            Id = "F045",
-                            Name = "Bún chả cá Hải Phòng",
-                            Image = "~/img/products/bun_cha_ca_hai_phong.jpeg",
-                            Description = "Bún chả cá Hải Phòng ngon mắt, thơm ngon, ăn kèm nước mắm pha chua ngọt",
-                            Price = 90000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-                        new Food
-                        {
-                            Id = "F046",
-                            Name = "Gỏi bưởi tôm thịt",
-                            Image = "~/img/products/goi_buoi_tom_thit.jpeg",
-                            Description = "Gỏi bưởi tôm thịt thơm ngon, ăn kèm nước mắm pha chua ngọt và đậu phộng giã nhuyễn",
-                            Price = 82000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-                        new Food
-                        {
-                            Id = "F047",
-                            Name = "Bún bò Huế",
-                            Image = "~/img/products/bun_bo_hue.jpeg",
-                            Description = "Bún bò Huế thơm ngon, nước dùng đậm đà, ăn kèm rau sống và bánh ướt giòn",
-                            Price = 95000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-                        new Food
-                        {
-                            Id = "F048",
-                            Name = "Lẩu ếch cay",
-                            Image = "~/img/products/lau_ech_cay.jpeg",
-                            Description = "Lẩu ếch cay nồng, ăn kèm nước lèo và ếch tươi ngon",
-                            Price = 110000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-                        new Food
-                        {
-                            Id = "F049",
-                            Name = "Bánh mì trứng ốp-la",
-                            Image = "~/img/products/banh_mi_trung_op_la.jpeg",
-                            Description = "Bánh mì trứng ốp-la thơm ngon, ăn kèm rau sống và trứng ốp-la giòn",
-                            Price = 70000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-                        new Food
-                        {
-                            Id = "F050",
-                            Name = "Gỏi cá trích mắm tôm",
-                            Image = "~/img/products/goi_ca_trich_mam_tom.jpeg",
-                            Description = "Gỏi cá trích mắm tôm thơm ngon, ăn kèm rau sống và bún mềm",
-                            Price = 88000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-                        new Food
-                        {
-                            Id = "F051",
-                            Name = "Bún ốc mít",
-                            Image = "~/img/products/bun_oc_mit.jpeg",
-                            Description = "Bún ốc mít thơm ngon, ăn kèm nước lèo và ốc mít tươi ngon",
-                            Price = 95000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-
-                        new Food
-                        {
-                            Id = "F052",
-                            Name = "Cơm chiên cá mặn",
-                            Image = "~/img/products/com_chien_ca_man.jpeg",
-                            Description = "Cơm chiên cá mặn thơm ngon, ăn kèm nước mắm pha chua ngọt và rau sống",
-                            Price = 85000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-
-                        new Food
-                        {
-                            Id = "F053",
-                            Name = "Bánh canh cua",
-                            Image = "~/img/products/banh_canh_cua.jpeg",
-                            Description = "Bánh canh cua thơm ngon, nước dùng đậm đà, ăn kèm rau sống và bánh canh giòn",
-                            Price = 98000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-
-                        new Food
-                        {
-                            Id = "F054",
-                            Name = "Bún riêu cua",
-                            Image = "~/img/products/bun_rieu_cua.jpeg",
-                            Description = "Bún riêu cua thơm ngon, nước dùng đậm đà, ăn kèm rau sống và bún giòn",
-                            Price = 90000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-
-                        new Food
-                        {
-                            Id = "F055",
-                            Name = "Bánh mì chảo lòng đỏ",
-                            Image = "~/img/products/banh_mi_chao_long_do.jpeg",
-                            Description = "Bánh mì chảo lòng đỏ thơm ngon, ăn kèm rau sống và lòng đỏ mềm ngon",
-                            Price = 75000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-
-                        new Food
-                        {
-                            Id = "F056",
-                            Name = "Mì quảng gà",
-                            Image = "~/img/products/mi_quang_ga.jpeg",
-                            Description = "Mì quảng gà thơm ngon, nước dùng đậm đà, ăn kèm rau sống và gà tươi ngon",
-                            Price = 92000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-
-                        new Food
-                        {
-                            Id = "F057",
-                            Name = "Lẩu cá kèo",
-                            Image = "~/img/products/lau_ca_keo.jpeg",
-                            Description = "Lẩu cá kèo thơm ngon, ăn kèm nước lèo và cá kèo tươi ngon",
-                            Price = 105000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-
-                        new Food
-                        {
-                            Id = "F058",
-                            Name = "Bánh mì xíu mại",
-                            Image = "~/img/products/banh_mi_xiu_mai.jpeg",
-                            Description = "Bánh mì xíu mại thơm ngon, ăn kèm rau sống và xíu mại giòn",
-                            Price = 78000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-
-                        new Food
-                        {
-                            Id = "F059",
-                            Name = "Gỏi gà bắp cải",
-                            Image = "~/img/products/goi_ga_bap_cai.jpeg",
-                            Description = "Gỏi gà bắp cải thơm ngon, ăn kèm nước mắm pha chua ngọt và bắp cải giòn",
-                            Price = 87000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
-
-                        new Food
-                        {
-                            Id = "F060",
-                            Name = "Bún đậu mắm tôm",
-                            Image = "~/img/products/bun_dau_mam_tom.jpeg",
-                            Description = "Bún đậu mắm tôm thơm ngon, ăn kèm nước mắm pha chua ngọt và đậu giòn",
-                            Price = 92000,
-                            FoodCategory = FoodCategory.MonMan
-                        },
+                        }
                     });
                     context.SaveChanges();
                 }
