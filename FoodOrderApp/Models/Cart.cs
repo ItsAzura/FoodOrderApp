@@ -1,11 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FoodOrderApp.Models
 {
     public class Cart
     {
-        [ForeignKey("AppUser")]
+        [Key]
         public string Id { get; set; }
+        [ForeignKey("AppUser")]
+        public string AppUserId { get; set; }
         public virtual AppUser AppUser { get; set; }
         public virtual ICollection<CartDetail> Foods { get; set; }
     }

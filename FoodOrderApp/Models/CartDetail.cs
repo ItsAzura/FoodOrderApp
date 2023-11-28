@@ -6,7 +6,11 @@ namespace FoodOrderApp.Models
     {
         public string Id { get; set; }
         public int Quantity { get; set; }
+        [ForeignKey("Cart")]
+        public string CartId { get; set; }
         public Cart Cart { get; set; }
+        [ForeignKey("Food")]
+        public string FoodId { get; set; }
         public Food Food { get; set; }
 
         [NotMapped]

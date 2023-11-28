@@ -5,7 +5,7 @@ namespace FoodOrderApp.Models
 {
     public class Order
     {
-        public string Id { get; set; }
+        public string? Id { get; set; }
         public DateTime? OrderDate { get; set; }
         public DateTime? ReceiveDate { get; set; }
         public OrderStatusCategory? OrderStatus { get; set; }
@@ -15,8 +15,8 @@ namespace FoodOrderApp.Models
         public string? PhoneNumber { get; set; }
         public string? Note { get; set; }
         [ForeignKey("AppUser")]
-        public string AppUserId { get; set; }
+        public string? AppUserId { get; set; }
         public AppUser? AppUser { get; set; }
-        public virtual ICollection<OrderDetail> Foods { get; set; }
+        public virtual ICollection<OrderDetail>? Foods { get; set; }
     }
 }
