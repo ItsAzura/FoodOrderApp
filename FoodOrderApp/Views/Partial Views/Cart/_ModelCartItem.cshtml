@@ -1,0 +1,21 @@
+﻿@model CartDetail
+
+<li class="cart-item" data-id="@Model.Id">
+    <div class="cart-item-info">
+        <p class="cart-item-title">
+            @Model.Food.Name
+        </p>
+        <span class="cart-item-price price" data-price="@Model.Food.Price">
+            @Model.Food.Price
+        </span>
+    </div>
+    <p class="product-note"><i class="fa-light fa-pencil"></i><span>@Model.Noted</span></p>
+    <div class="cart-item-control">
+        <button class="cart-item-delete" onclick="deleteCartItem(${product.id},this)">Xóa</button>
+        <div class="buttons_added">
+            <input class="minus is-form" type="button" value="-" onclick="decreasingNumber(this)">
+            <input class="input-qty" max="100" min="1" name="" type="number" value="${product.soluong}">
+            <input class="plus is-form" type="button" value="+" onclick="increasingNumber(this)">
+        </div>
+    </div>
+</li>
