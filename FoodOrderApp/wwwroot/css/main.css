@@ -1618,13 +1618,13 @@ input[type=number] {
     position: relative;
 }
 
-.order-history-status-sp.complete{
+.order-history-status-sp.DaXuLy{
     background-color: #27ae60;
     color: var(--white);
     padding-left: 35px;
 }
 
-.order-history-status-sp.complete::before{
+.order-history-status-sp.DaXuLy::before{
     content: "\f00c";
     font-family: "Font Awesome 6 Pro";
     position: absolute;
@@ -1633,13 +1633,13 @@ input[type=number] {
     transform: translateY(-50%);
 }
 
-.order-history-status-sp.no-complete{
+.order-history-status-sp.DangXuLy{
     background-color: #f04e2e;
     color: var(--white);
     padding-left: 35px;
 }
 
-.order-history-status-sp.no-complete::before{
+.order-history-status-sp.DangXuLy::before{
     content: "\e1d4";
     font-family: "Font Awesome 6 Pro";
     position: absolute;

@@ -16,6 +16,10 @@
     display: flex;
 }
 
+.toast:not(.show) {
+    display: block !important;
+}
+
 @keyframes slideInLeft {
     from {
         opacity: 0.2;

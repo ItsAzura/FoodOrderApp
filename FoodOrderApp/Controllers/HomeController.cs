@@ -3,6 +3,8 @@ using FoodOrderApp.Models;
 using FoodOrderApp.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace FoodOrderApp.Controllers
@@ -24,22 +26,77 @@ namespace FoodOrderApp.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var fakeUserId = "05657dcf-6ee9-4336-a7f8-239f99479b75";
+            var fakeUserId = "4ae9fe69-982c-4f48-a493-910af488189e";
             var loggedInUser = _userManager.FindByIdAsync(fakeUserId).Result;
 
-            if (loggedInUser != null) {
+            if (loggedInUser != null)
+            {
 
                 CartUserViewModel cartUserViewModel = new CartUserViewModel()
                 {
                     AppUser = loggedInUser,
-                    Carts = _applicationDbContext.Carts.ToList(),  
-                    Foods = _applicationDbContext.Foods.ToList(),
+                    ApplicationDbContext = _applicationDbContext,
+                    Carts = _applicationDbContext.Carts.Include(e => e.Foods).ToList(),
+
                 };
 
                 return View(cartUserViewModel);
             }
 
-            return View();            
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult UpdateCartDetailQuantity([FromBody] CartDetailQuantityUpdate model)
+        {
+            var cartDetail = _applicationDbContext.Carts
+                .SelectMany(e => e.Foods)
+                .Include(cd => cd.Food)
+                .SingleOrDefault(cd => cd.Id == model.CartDetailId);
+
+            if (cartDetail != null)
+            {
+                cartDetail.Quantity = model.UpdatedQuantity;
+
+                _applicationDbContext.SaveChanges();
+
+                Console.WriteLine($"Updated CartDetailId: {cartDetail.Id}");
+            }
+            else
+            {
+                Console.WriteLine($"CartDetail with ID {model.CartDetailId} not found.");
+            }
+
+            return Json(new { success = true });
+        }
+
+        public class CartDetailQuantityUpdate
+        {
+            public string CartDetailId { get; set; }
+            public int UpdatedQuantity { get; set; }
+        }
+
+        [HttpPost]
+        public IActionResult DeleteCartDetail([FromBody] CartDetailDelete model)
+        {            
+            var cartDetail = _applicationDbContext.Carts
+                .SelectMany(c => c.Foods)
+                .FirstOrDefault(cd => cd.Id == model.CartDetailId);
+
+            if (cartDetail != null)
+            {
+                _applicationDbContext.Remove(cartDetail);
+                _applicationDbContext.SaveChanges();
+
+                return Json(new { success = true, message = "CartDetail deleted successfully." });
+            }
+
+            return Json(new { success = false, message = "CartDetail not found." });
+        }
+
+        public class CartDetailDelete
+        {
+            public string CartDetailId { get; set; }
         }
 
         public IActionResult Privacy()

@@ -1,0 +1,78 @@
+﻿@using FoodOrderApp.ViewModels;
+@model OrderHistoryViewModel
+
+<div class="container open" id="order-history">
+    <div class="main-account">
+        <div class="main-account-header">
+            <h3>Quản lý đơn hàng của bạn</h3>
+            <p>Xem chi tiết, trạng thái của những đơn hàng đã đặt.</p>
+        </div>
+        <div class="main-account-body">
+            <div class="order-history-section">
+                @{
+                    var UserOrder = Model.Order.Where(order => order.AppUserId == Model.AppUser.Id).ToList();                  
+
+                    if (UserOrder.Count() <= 0)
+                    {
+                        <div class="empty-order-section">
+                            <img src="./assets/img/empty-order.jpg" alt="" class="empty-order-img">
+                            <p>Chưa có đơn hàng nào</p>
+                        </div>
+                    } else
+                    {
+                        foreach(var order in UserOrder)
+                        {                     
+                            decimal totalPrice = 0;
+                            
+                            <div class="order-history-group">
+                            @foreach(var orderDetail in order.Foods)
+                            {
+                                    <div class="order-history">
+                                        <div class="order-history-left">
+                                            <img src="@orderDetail.Food.Image" alt="">
+                                            <div class="order-history-info">
+                                                <h4>@orderDetail.Food.Name</h4>
+                                                <p class="order-history-note"><i class="fa-light fa-pen"></i> Không có ghi chú</p> <!-- Nhắc huy OrderDetail không có Noted giông trong CartDetail -->
+                                                <p class="order-history-quantity">x @orderDetail.Quantity</p>
+                                            </div>
+                                        </div>
+                                        <div class="order-history-right">
+                                            <div class="order-history-price">
+                                                <span class="order-history-current-price">@{
+                                                        totalPrice += orderDetail.Quantity * orderDetail.Food.Price;
+                                                    }
+                                                    @(($"{orderDetail.Quantity * orderDetail.Food.Price}Đ"))
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                            }
+                                <div class="order-history-control">
+                                    <div class="order-history-status">
+                                        <span class="order-history-status-sp @order.OrderStatus">@order.OrderStatus</span>
+                                        <button id="order-history-detail" onclick='detailOrder(@Json.Serialize(order))'><i class="fa-regular fa-eye"></i> Xem chi tiết</button>
+                                    </div>
+                                    <div class="order-history-total">
+                                        <span class="order-history-total-desc">Tổng tiền: </span>
+                                        <span class="order-history-toltal-price">@($"{totalPrice}Đ")</span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal detail-order">
+    <div class="modal-container mdl-cnt">
+        <h3 class="modal-container-title">Thông tin đơn hàng</h3>
+        <button class="form-close" onclick="closeModal()"><i class="fa-regular fa-xmark"></i></button>
+        <div class="detail-order-content">
+        </div>
+    </div>
+</div>
+
+<script src="~/js/OrderHistory/OrderHistoryHanlder.js" asp-append-version="true"></script>
