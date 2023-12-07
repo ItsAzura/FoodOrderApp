@@ -1,11 +1,13 @@
 ﻿using FoodOrderApp.Data.Enum;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FoodOrderApp.Models
 {
     public class Order
     {
-        public string? Id { get; set; }
+        [Key]
+        public int? Id { get; set; }
         public DateTime? OrderDate { get; set; }
         public DateTime? ReceiveDate { get; set; }
         public OrderStatusCategory? OrderStatus { get; set; }

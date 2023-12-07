@@ -1,0 +1,9 @@
+﻿@model CartDetail
+
+<div class="food-total">
+    <div class="count">@($"{Model.Quantity}x")</div>
+    <div class="info-food">
+        <div class="name-food">@Model.Food.Name</div>
+        <span food-price="@(Model.Food.Price * Model.Quantity)"></span>
+    </div>
+</div>
