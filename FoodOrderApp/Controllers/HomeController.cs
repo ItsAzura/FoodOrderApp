@@ -26,7 +26,7 @@ namespace FoodOrderApp.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var fakeUserId = "4ae9fe69-982c-4f48-a493-910af488189e";
+            var fakeUserId = "e0d5d7f5-71bc-472e-be95-38669cce1849";
             var loggedInUser = _userManager.FindByIdAsync(fakeUserId).Result;
 
             if (loggedInUser != null)
