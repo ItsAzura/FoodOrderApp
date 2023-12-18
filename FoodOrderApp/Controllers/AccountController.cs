@@ -53,18 +53,50 @@ namespace FoodOrderApp.Controllers
             if (newUserResponse.Succeeded)
             {
                 await _userManager.AddToRoleAsync(newUser, UserRoles.User);
-
-                // Redirect to Index with user ID
-                return RedirectToAction("Index", "Home", new { userId = newUser.Id });
+                await _signInManager.SignInAsync(newUser, isPersistent: false);
+                return RedirectToAction("Index", "Home");
             }
             return View(registerViewModel);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Logout()
+        [HttpGet]
+        public IActionResult Login()
         {
-            await _signInManager.SignOutAsync();
-            return RedirectToAction("Home");
+            var response = new LoginViewModel();
+            return View(response);
         }
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
+        {
+            if (!ModelState.IsValid) return View(loginViewModel);
+
+            //  FindByIdAsync lỗi trả về null
+            //var user = await _userManager.FindByIdAsync(loginViewModel.EmailAddress);
+
+            //  Dùng tạm userId bằng userId của email muốn đăng nhập
+            var user = await _userManager.FindByIdAsync("ae8d85f9-7ea8-4f85-8664-d5f344ff5655");
+
+            if (user != null)
+            {
+                //User is found, check password
+                var passwordCheck = await _userManager.CheckPasswordAsync(user, loginViewModel.Password);
+                if (passwordCheck)
+                {
+                    //Password correct, sign in
+                    var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                //Password is incorrect
+                TempData["Error"] = "Wrong credentials. Please try again";
+                return View(loginViewModel);
+            }
+            //User not found
+            TempData["Error"] = "Wrong credentials. Please try again";
+            return View(loginViewModel);
+        }
+
     }
 }
