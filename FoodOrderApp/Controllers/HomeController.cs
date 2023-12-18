@@ -26,7 +26,10 @@ namespace FoodOrderApp.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            var fakeUserId = "ae8d85f9-7ea8-4f85-8664-d5f344ff5655";
+
             var fakeUserId = "e0d5d7f5-71bc-472e-be95-38669cce1849";
+
             var loggedInUser = _userManager.FindByIdAsync(fakeUserId).Result;
 
             if (loggedInUser != null)
@@ -108,6 +111,14 @@ namespace FoodOrderApp.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+
+        
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
