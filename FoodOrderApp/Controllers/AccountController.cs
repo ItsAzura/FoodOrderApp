@@ -4,6 +4,7 @@ using FoodOrderApp.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.DiaSymReader;
+using Microsoft.EntityFrameworkCore;
 
 namespace FoodOrderApp.Controllers
 {
@@ -70,11 +71,8 @@ namespace FoodOrderApp.Controllers
         {
             if (!ModelState.IsValid) return View(loginViewModel);
 
-            //  FindByIdAsync lỗi trả về null
-            //var user = await _userManager.FindByIdAsync(loginViewModel.EmailAddress);
-
-            //  Dùng tạm userId bằng userId của email muốn đăng nhập
-            var user = await _userManager.FindByIdAsync("ae8d85f9-7ea8-4f85-8664-d5f344ff5655");
+            var checkEmail = loginViewModel.EmailAddress;
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == checkEmail);
 
             if (user != null)
             {
@@ -90,11 +88,11 @@ namespace FoodOrderApp.Controllers
                     }
                 }
                 //Password is incorrect
-                TempData["Error"] = "Wrong credentials. Please try again";
+                ModelState.AddModelError(string.Empty, "Sai mật khẩu!");
                 return View(loginViewModel);
             }
             //User not found
-            TempData["Error"] = "Wrong credentials. Please try again";
+            ModelState.AddModelError(string.Empty, "Địa chỉ email không tồn tại!");
             return View(loginViewModel);
         }
 
