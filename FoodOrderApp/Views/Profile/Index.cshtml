@@ -8,6 +8,7 @@
     #save-password[disabled], #save-info-user[disabled] {
         background-color: #ccc;
         color: #666;
+        cursor: not-allowed;
     }
 
     #save-password, #save-info-user {
@@ -38,18 +39,16 @@
         <div class="container">
             <div class="header-middle-left">
                 <div class="header-logo">
-                    <a href="">
+                    <a asp-controller="Home" asp-action="Index">
                         <img src="~/img/vy-food.png" alt="" class="header-logo-img">
                     </a>
                 </div>
             </div>
             <div class="header-middle-center">
-                <form action="" class="form-search">
-                    <span class="search-btn"><i class="fa-light fa-magnifying-glass"></i></span>
-                    <input type="text" class="form-search-input" placeholder="Tìm kiếm món ăn..."
-                           oninput="searchProducts()">
-                    <button class="filter-btn"><i class="fa-light fa-filter-list"></i><span>Lọc</span></button>
-                </form>
+                <h3>Tài khoản của tôi</h3>
+            </div>
+            <div class="header-middle-center">
+                
             </div>
             <div class="header-middle-right">
                 <ul class="header-middle-right-list">
@@ -64,17 +63,6 @@
                         </div>
                     </li>
                     <partial name="~/Views/Partial Views/_LoginPartial.cshtml" />
-                    <li class="header-middle-right-item open" onclick="openCart()">
-                        <div class="cart-icon-menu">
-                            <i class="fa-light fa-basket-shopping"></i>
-                            @* @{
-                                var userCart = Model.Carts?.FirstOrDefault(cart => cart.AppUserId == Model.AppUser?.Id);
-                                var itemCount = userCart?.Foods?.Count() ?? 0;
-                            } *@
-                            <span class="count-product-cart">0</span>
-                        </div>
-                        <span>Giỏ hàng</span>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -127,12 +115,12 @@
                     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
                     <script>
                         $(document).ready(function () {
-                            $('form').on('input', '#infoname, #infophone, #infoemail', function () {
+                            $('form').on('input', '#infoname, #infophone, #infoaddress', function () {
                                 // Your existing code for general information inputs
                                 var infoname = $('#infoname').val();
                                 var infophone = $('#infophone').val();
-                                var infoemail = $('#infoemail').val();
-                                var generalInfoFilled = infoname !== '' && infophone !== '' && infoemail !== '';
+                                var infoaddress = $('#infoaddress').val();
+                                var generalInfoFilled = infoname !== '' && infophone !== '' && infoaddress !== '';
 
                                 // Check if all general information input fields are filled
                                 var allFilled = generalInfoFilled;

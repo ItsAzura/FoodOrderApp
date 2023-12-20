@@ -1,4 +1,5 @@
 ﻿using FoodOrderApp.Data;
+using FoodOrderApp.Helpers;
 using FoodOrderApp.Models;
 using FoodOrderApp.ViewModels;
 using Microsoft.AspNetCore.Identity;
@@ -52,13 +53,25 @@ namespace FoodOrderApp.Controllers
                 UserName = emailParts[0],
                 Email = registerViewModel.EmailAddress,
                 EmailConfirmed = true,
-                PhoneNumber = registerViewModel.PhoneNumber
+                PhoneNumber = registerViewModel.PhoneNumber,
             };
 
             var newUserResponse = await _userManager.CreateAsync(newUser, registerViewModel.Password);
             if (newUserResponse.Succeeded)
             {
                 await _userManager.AddToRoleAsync(newUser, UserRoles.User);
+
+                Cart newCart = new Cart()
+                {
+                    Id = CartIdGenerator.GenerateNextCartId(_context, newUser),
+                    AppUserId = newUser.Id,
+                };
+
+                newUser.Cart = newCart;
+
+                await _context.Carts.AddAsync(newCart);
+                await _context.SaveChangesAsync();
+
                 await _signInManager.SignInAsync(newUser, isPersistent: false);
                 return RedirectToAction("Index", "Home");
             }
