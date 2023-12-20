@@ -7,3 +7,4 @@ for (let i = 0; i < sidebars.length; i++) {
         sidebars[i].classList.add("active");
     };
 }
+

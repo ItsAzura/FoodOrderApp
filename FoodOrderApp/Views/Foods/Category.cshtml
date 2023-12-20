@@ -2,8 +2,11 @@
 @using FoodOrderApp.Data.Enum.EnumAttributes;
 @using FoodOrderApp.Data.Enum;
 @using FoodOrderApp.Models.ViewModels;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Foods";
     var foodCategories = Enum.GetValues(typeof(FoodCategory)).Cast<FoodCategory>();
 }
 
@@ -24,7 +27,8 @@
             </form>
         </div>
         <div class="advanced-search-price">
-            <form asp-controller="Home" asp-action="Index" asp-route-foodCategory="@Model.CurrentCategory" method="get" >
+            <form asp-controller="Foods" asp-action="Category" method="get">
+                <input type="hidden" name="foodCategory" value="@Model.CurrentCategory" />
                 <span>Giá từ</span>
                 <input type="number" placeholder="tối thiểu" name="minPrice" id="minPrice" value="@ViewData["MinPrice"]">
                 <span>đến</span>
@@ -36,17 +40,17 @@
         </div>
         <div class="advanced-search-control">
             <button id="sort-ascending">
-                <a asp-controller="Home" asp-action="Index" asp-route-foodCategory="@Model.CurrentCategory" asp-route-sortOrder="asc">
+                <a asp-action="Category" asp-route-foodCategory="@Model.CurrentCategory" asp-route-sortOrder="asc">
                     <i class="fa-regular fa-arrow-up-short-wide"></i>
                 </a>
             </button>
             <button id="sort-descending">
-                <a asp-controller="Home" asp-action="Index" asp-route-foodCategory="@Model.CurrentCategory" asp-route-sortOrder="desc">
+                <a asp-action="Category" asp-route-foodCategory="@Model.CurrentCategory" asp-route-sortOrder="desc">
                     <i class="fa-regular fa-arrow-down-wide-short"></i>
                 </a>
             </button>
             <button id="reset-search">
-                <a asp-controller="Home"  asp-action="Index" asp-route-foodCategory="@Model.CurrentCategory" asp-route-sortOrder="">
+                <a asp-action="Category" asp-route-foodCategory="@Model.CurrentCategory" asp-route-sortOrder="">
                     <i class="fa-light fa-arrow-rotate-right"></i>
                 </a>
             </button>
@@ -58,7 +62,7 @@
 <main class="main-wrapper">
     <div class="container" id="trangchu">
         <div class="home-slider">
-            <img src="./img/banner-1.png" alt="">
+            <img src="/img/banner-1.png" alt="">
             <!-- <img src="./assets/img/banner-2.png" alt="">
             <img src="./assets/img/banner-3.png" alt="">
             <img src="./assets/img/banner-4.png" alt="">
@@ -106,40 +110,53 @@
             <h2 class="home-title">Khám phá thực đơn của chúng tôi</h2>
         </div>
         <div class="home-products" id="home-products">
-            @foreach (var item in Model.Foods)
+            @if (Model.Foods.Any())
             {
-                <div class="col-product">
-                    <article class="card-product">
-                        <div class="card-header">
-                            <a href="#" class="card-image-link" onclick="detailProduct(event, '@item.Id')">
-                                <img class="card-image" src="@item.Image" alt="@item.Name">
-                            </a>
-                        </div>
-                        <div class="food-info">
-                            <div class="card-content">
-                                <div class="card-title">
-                                    <a href="#" class="card-title-link" onclick="detailProduct(event, '@item.Id')">@item.Name</a>
+                @foreach (var item in Model.Foods)
+                {
+                    <div class="col-product">
+                        <article class="card-product">
+                            <div class="card-header">
+                                <a href="#" class="card-image-link" onclick="detailProduct(event, '@item.Id')">
+                                    <img class="card-image" src="@item.Image" alt="@item.Name">
+                                </a>
+                            </div>
+                            <div class="food-info">
+                                <div class="card-content">
+                                    <div class="card-title">
+                                        <a href="#" class="card-title-link" onclick="detailProduct(event, '@item.Id')">@item.Name</a>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="product-price">
+                                        <span class="current-price">@item.Price VNĐ</span>
+                                    </div>
+                                    <div class="product-buy">
+                                        <button onclick="detailProduct(@item.Id)" class="card-button order-item"><i class="fa-regular fa-cart-shopping-fast"></i> Đặt món</button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="card-footer">
-                                <div class="product-price">
-                                    <span class="current-price">@item.Price VNĐ</span>
-                                </div>
-                                <div class="product-buy">
-                                    <button onclick="detailProduct(@item.Id)" class="card-button order-item"><i class="fa-regular fa-cart-shopping-fast"></i> Đặt món</button>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
+                        </article>
+                    </div> 
+                }
+            }else
+            {
+                <div class="no-result">
+                    <div class="no-result-h">Tìm kiếm không có kết quả</div>
+                    <div class="no-result-p">Xin lỗi, chúng tôi không thể tìm được kết quả hợp với tìm kiếm của bạn</div>
+                    <div class="no-result-i"><i class="fa-light fa-face-sad-cry"></i></div>
                 </div>
+               
             }
-        </div></div>
+           
+        </div>
+    </div>
     <div class="page-nav">
         <ul class="page-nav-list">
             @for (int i = 1; i <= Model.PagingInfo.TotalPages; i++)
             {
                 <li class="page-nav-item">
-                    <a asp-controller="Home" asp-action="Index"
+                    <a asp-controller="Foods" asp-action="Category"
                        asp-route-foodCategory="@Model.CurrentCategory"
                        asp-route-foodPage="@i"
                        asp-route-sortOrder="@Model.PagingInfo.SortOrder"
@@ -151,6 +168,8 @@
             }
         </ul>
     </div>
+
+    
     <div class="modal product-detail">
         <button class="modal-close close-popup"><i class="fa-thin fa-xmark"></i></button>
         <div class="modal-container mdl-cnt" id="product-detail-content">

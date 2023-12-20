@@ -311,7 +311,7 @@ namespace FoodOrderApp.Data
                             Location = "Liên Chiểu, Đà Nẵng",
                             PhoneNumber = "09878787654",
                             Note = "Không cần dụng cụ ăn uống",
-                            AppUserId = "bc8af0a8-b3a5-4f95-8678-f696820f480e", // Assuming you have an AppUser with this Id
+                            AppUserId = "f3d344b4-5377-482a-b906-ba0734d081dc", // Assuming you have an AppUser with this Id
                             Foods = new List<OrderDetail>
                             {
                                 new OrderDetail { Id = "OD001", FoodId = "F001", Quantity = 2 },
@@ -329,7 +329,7 @@ namespace FoodOrderApp.Data
                             Location = "Hoàng Diệu, Hải Châu, Đà Nẵng",
                             PhoneNumber = "09878787254",
                             Note = "Không cần dụng cụ ăn uống",
-                            AppUserId = "280e5fa1-e8fa-440e-8e78-2a221c64450c", // Assuming you have an AppUser with this Id
+                            AppUserId = "8b24e94a-7615-4f56-9575-1918d54c9477", // Assuming you have an AppUser with this Id
                             Foods = new List<OrderDetail>
                             {
                                 new OrderDetail { Id = "OD003", FoodId = "F003", Quantity = 3 },
@@ -348,7 +348,7 @@ namespace FoodOrderApp.Data
                         new Cart()
                         {
                             Id = "CA001",
-                            AppUserId = "bc8af0a8-b3a5-4f95-8678-f696820f480e",
+                            AppUserId = "00c46949-0b75-45b5-9169-a6d68c80b0f1",
                             Foods = new List<CartDetail>
                             {
                                 new CartDetail { Id = "CD001", FoodId = "F001", Quantity = 2},
@@ -358,7 +358,7 @@ namespace FoodOrderApp.Data
                         new Cart()
                         {
                             Id = "CA002",
-                            AppUserId = "280e5fa1-e8fa-440e-8e78-2a221c64450c",
+                            AppUserId = "f3d344b4-5377-482a-b906-ba0734d081dc",
                             Foods = new List<CartDetail>
                             {
                                 new CartDetail { Id = "CD003", FoodId = "F001", Quantity = 2},
@@ -368,7 +368,7 @@ namespace FoodOrderApp.Data
                         new Cart()
                         {
                             Id = "CA003",
-                            AppUserId = "e1b475e4-b413-4c37-9b98-b2e3b8569842",
+                            AppUserId = "8b24e94a-7615-4f56-9575-1918d54c9477",
                             Foods = new List<CartDetail>
                             {
                                 new CartDetail { Id = "CD005", FoodId = "F001", Quantity = 2},
