@@ -310,7 +310,7 @@ namespace FoodOrderApp.Data
                             Location = "Liên Chiểu, Đà Nẵng",
                             PhoneNumber = "09878787654",
                             Note = "Không cần dụng cụ ăn uống",
-                            AppUserId = "4ae9fe69-982c-4f48-a493-910af488189e", // Assuming you have an AppUser with this Id
+                            AppUserId = "e0d5d7f5-71bc-472e-be95-38669cce1849", // Assuming you have an AppUser with this Id
                             Foods = new List<OrderDetail>
                             {
                                 new OrderDetail { FoodId = "F001", Quantity = 2 },
@@ -327,7 +327,7 @@ namespace FoodOrderApp.Data
                             Location = "Hoàng Diệu, Hải Châu, Đà Nẵng",
                             PhoneNumber = "09878787254",
                             Note = "Không cần dụng cụ ăn uống",
-                            AppUserId = "64d6a68d-144f-45c3-9120-d87dcc29d5be", // Assuming you have an AppUser with this Id
+                            AppUserId = "af689223-b6c2-4713-b6a6-2a443d1b4eae", // Assuming you have an AppUser with this Id
                             Foods = new List<OrderDetail>
                             {
                                 new OrderDetail { FoodId = "F003", Quantity = 3 },
@@ -346,7 +346,7 @@ namespace FoodOrderApp.Data
                         new Cart()
                         {
                             Id = "CA001",
-                            AppUserId = "4ae9fe69-982c-4f48-a493-910af488189e",
+                            AppUserId = "e0d5d7f5-71bc-472e-be95-38669cce1849",
                             Foods = new List<CartDetail>
                             {
                                 new CartDetail { Id = "CD001", FoodId = "F001", Quantity = 2, Noted = "Noted1"},
@@ -356,7 +356,7 @@ namespace FoodOrderApp.Data
                         new Cart()
                         {
                             Id = "CA002",
-                            AppUserId = "64d6a68d-144f-45c3-9120-d87dcc29d5be",
+                            AppUserId = "af689223-b6c2-4713-b6a6-2a443d1b4eae",
                             Foods = new List<CartDetail>
                             {
                                 new CartDetail { Id = "CD003", FoodId = "F001", Quantity = 2},
@@ -366,7 +366,7 @@ namespace FoodOrderApp.Data
                         new Cart()
                         {
                             Id = "CA003",
-                            AppUserId = "b4a091b1-2e18-4c54-8de5-fc9862b13604",
+                            AppUserId = "4cac0fab-a14d-4f83-a1f1-398b5652604d",
                             Foods = new List<CartDetail>
                             {
                                 new CartDetail { Id = "CD005", FoodId = "F001", Quantity = 2},
@@ -376,30 +376,6 @@ namespace FoodOrderApp.Data
                     });
                     context.SaveChanges();
                 }
-
-                //if (!context.CartDetails.Any())
-                //{
-                //    context.CartDetails.AddRange(new List<CartDetail>()
-                //    {
-                //        new CartDetail()
-                //        {
-                //            Id = "CD001",
-                //            Quantity = 2,
-                //            Noted = "Extra cheese",
-                //            CartId = "CA001", // Assuming you have a Cart with this Id
-                //            FoodId = "F001", // Assuming you have a Food with this Id
-                //        },
-                //        new CartDetail()
-                //        {
-                //            Id = "CD002",
-                //            Quantity = 1,
-                //            Noted = "No onions",
-                //            CartId = "CA002", // Assuming you have a Cart with this Id
-                //            FoodId = "F002", // Assuming you have a Food with this Id
-                //        }
-                //    });
-                //    context.SaveChanges();
-                //}
             }
         }
 

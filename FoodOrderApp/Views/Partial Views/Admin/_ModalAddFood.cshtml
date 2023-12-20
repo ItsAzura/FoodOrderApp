@@ -1,0 +1,82 @@
+﻿@using FoodOrderApp.Data.Enum;
+@using FoodOrderApp.Extensions;
+@using FoodOrderApp.ViewModels.Admin;
+@model FoodOrderApp.ViewModels.Admin.CreateFoodViewModel
+
+<div class="modal add-product">
+    <div class="modal-container">
+        <h3 class="modal-container-title add-product-e">THÊM MỚI SẢN PHẨM</h3>
+        <h3 class="modal-container-title edit-product-e">CHỈNH SỬA SẢN PHẨM</h3>
+        <button class="modal-close product-form"><i class="fa-regular fa-xmark"></i></button>
+        <div class="modal-content">
+            <form method="post" asp-action="CreateFood" enctype="multipart/form-data" class="add-product-form">
+                <div class="modal-content-left">
+                    <img src="~/img/blank-image.png" alt="" class="upload-image-preview">
+                    <div class="form-group file">
+                        <label asp-for="Image" class="form-label-file">
+                            <i class="fa-regular fa-cloud-arrow-up"></i>
+                            Chọn hình ảnh
+                        </label>
+                        <input asp-for="Image" type="file" id="up-hinh-anh" class="form-control" placeholder="Chọn hình ảnh">
+                        <span asp-validation-for="Image" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="modal-content-right">
+                    <div class="form-group">
+                        <label asp-for="Name" class="form-label">
+                            Tên món
+                        </label>
+                        <input asp-for="Name" id="up-hinh-anh" class="form-control" placeholder="Nhập tên món">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        @{
+                            var foodCategories = Enum.GetValues(typeof(FoodCategory)).Cast<FoodCategory>();
+                        }
+                        <label asp-for="Category" class="form-label">Chọn món</label>
+                        <select asp-for="Category" id="chon-mon">
+                            @foreach (var category in foodCategories)
+                            {
+                                <option value="@category">
+                                    @category.GetDisplayText()
+                                </option>
+                            }
+                        </select>
+                        <span asp-validation-for="Category" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price" class="form-label">Giá bán</label>
+                        <input asp-for="Price" id="gia-moi" placeholder="Nhập giá bán" class="form-control">
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="form-label">Mô tả</label>
+                        <textarea asp-for="Description" class="product-desc" id="mo-ta" placeholder="Nhập mô tả món ăn..."></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <button class="form-submit btn-add-product-form add-product-e" id="add-product-button" type="submit">
+                        <i class="fa-regular fa-plus"></i>
+                        <span>THÊM MÓN</span>
+                    </button>
+
+@*                     <button class="form-submit btn-update-product-form edit-product-e" id="update-product-button">
+                        <i class="fa-light fa-pencil"></i>
+                        <span>LƯU THAY ĐỔI</span>
+                    </button> *@
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Close Popup Modal
+    let closePopup = document.querySelectorAll(".modal-close");
+    let modalPopup = document.querySelectorAll(".modal");
+
+    for (let i = 0; i < closePopup.length; i++) {
+        closePopup[i].onclick = () => {
+            modalPopup[i].classList.remove("open");
+        };
+    }
+</script>

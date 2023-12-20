@@ -1,5 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using FoodOrderApp.ViewModels.Admin;
+@{
+    var activeAction = ViewContext.RouteData.Values["action"]?.ToString() ?? "Index";
+}
 
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -29,14 +33,14 @@
             </div>
             <div class="middle-sidebar">
                 <ul class="sidebar-list">
-                    <li class="sidebar-list-item tab-content active">
-                        <a href="#" class="sidebar-link">
+                    <li class="sidebar-list-item tab-content @(activeAction == "Index" ? "active" : "")">
+                        <a class="sidebar-link" asp-area="" asp-controller="Admin" asp-action="Index" data-action="Index">
                             <div class="sidebar-icon"><i class="fa-light fa-house"></i></div>
                             <div class="hidden-sidebar">Trang tổng quan</div>
                         </a>
                     </li>
-                    <li class="sidebar-list-item tab-content">
-                        <a href="#" class="sidebar-link">
+                    <li class="sidebar-list-item tab-content @(activeAction == "Food" ? "active" : "")">
+                        <a class="sidebar-link" asp-area="" asp-controller="Admin" asp-action="Food" data-action="Food">
                             <div class="sidebar-icon"><i class="fa-light fa-pot-food"></i></div>
                             <div class="hidden-sidebar">Sản phẩm</div>
                         </a>
@@ -88,6 +92,10 @@
             @RenderBody()
         </main>
     </div>
+
+    @{
+        Html.RenderPartial("~/Views/Partial Views/Admin/_ModalAddFood.cshtml", new CreateFoodViewModel());
+    }
 
     <script src="~/js/admin.js"></script>
 </body>
