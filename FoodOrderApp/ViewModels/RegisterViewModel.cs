@@ -7,9 +7,6 @@ namespace FoodOrderApp.ViewModels
         [Display(Name = "Name")]
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
-        [Display(Name = "User Name")]
-        [Required(ErrorMessage = "User Name is required")]
-        public string UserName { get; set; }
         [Display(Name = "Email Address")]
         [Required(ErrorMessage = "Email address is required")]
         public string EmailAddress { get; set; }

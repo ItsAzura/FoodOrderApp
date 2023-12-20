@@ -7,7 +7,6 @@ namespace FoodOrderApp.ViewModels
     {
         public ApplicationDbContext ApplicationDbContext { get; set; }
         public List<Cart> Carts { get; set; }
-
         public AppUser AppUser { get; set; }
     }
 }

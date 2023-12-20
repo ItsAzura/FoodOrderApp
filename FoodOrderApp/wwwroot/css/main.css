@@ -1525,6 +1525,7 @@ button.thanh-toan.disabled {
     padding: 10px 15px;
     cursor: pointer;
     border-radius: 5px;
+    margin-bottom: 15px;
 }
 
 #save-password i,
@@ -2311,3 +2312,9 @@ input[type=number] {
     display: none;
 }
 
+
+.btn-disabled {
+    background-color: #ccc;
+    border-color: #aaa;
+    color: #888;
+}

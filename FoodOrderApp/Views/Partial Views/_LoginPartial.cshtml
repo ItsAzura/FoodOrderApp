@@ -8,14 +8,14 @@
         <i class="fa-light fa-user"></i>
         <div class="auth-container">
             <span class="text-dndk">Tài khoản</span>
-            <span class="text-tk">@UserManager.GetUserName(User)<i class="fa-sharp fa-solid fa-caret-down"></i></span>
+            <span class="text-tk">@UserManager.GetUserName(User) <i class="fa-sharp fa-solid fa-caret-down"></i></span>
         </div>
         <ul class="header-middle-right-menu">
             @if (User.IsInRole("admin"))
             {
                 <li><a><i class="fa-light fa-circle-user"></i>Admin panel</a></li>
             }
-            <li><a><i class="fa-light fa-circle-user"></i> Tài khoản của tôi</a></li>
+            <li><a asp-controller="Profile" asp-action="Index"><i class="fa-light fa-circle-user"></i> Tài khoản của tôi</a></li>
             <li><a><i class="fa-regular fa-bags-shopping"></i> Đơn hàng đã mua</a></li>
             <li class="border"><a id="logout" asp-controller="Home" asp-action="Logout"><i class="fa-light fa-right-from-bracket"></i> Thoát tài khoản</a></li>
         </ul>

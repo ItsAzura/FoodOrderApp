@@ -1,4 +1,5 @@
 ﻿using FoodOrderApp.Data;
+using FoodOrderApp.Helpers;
 using FoodOrderApp.Models;
 using FoodOrderApp.ViewModels;
 using Microsoft.AspNetCore.Identity;
@@ -35,25 +36,42 @@ namespace FoodOrderApp.Controllers
                 return View(registerViewModel);
             }
 
-            var user = await _userManager.FindByEmailAsync(registerViewModel.EmailAddress);
-            if(user != null)
+            var checkEmail = registerViewModel.EmailAddress;
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == checkEmail);
+            if (user != null)
             {
-                TempData["Error"] = "Địa chỉ email đã tồn tại";
+                ModelState.AddModelError(string.Empty, "Địa chỉ email đã tồn tại");
                 return View(registerViewModel);
             }
+
+            //  Automatically generate the UserName from the EmailAddress
+            var emailParts = registerViewModel.EmailAddress.Split('@');
 
             var newUser = new AppUser()
             {
                 Name = registerViewModel.Name,
-                UserName = registerViewModel.UserName,
+                UserName = emailParts[0],
                 Email = registerViewModel.EmailAddress,
-                PhoneNumber = registerViewModel.PhoneNumber
+                EmailConfirmed = true,
+                PhoneNumber = registerViewModel.PhoneNumber,
             };
 
             var newUserResponse = await _userManager.CreateAsync(newUser, registerViewModel.Password);
             if (newUserResponse.Succeeded)
             {
                 await _userManager.AddToRoleAsync(newUser, UserRoles.User);
+
+                Cart newCart = new Cart()
+                {
+                    Id = CartIdGenerator.GenerateNextCartId(_context, newUser),
+                    AppUserId = newUser.Id,
+                };
+
+                newUser.Cart = newCart;
+
+                await _context.Carts.AddAsync(newCart);
+                await _context.SaveChangesAsync();
+
                 await _signInManager.SignInAsync(newUser, isPersistent: false);
                 return RedirectToAction("Index", "Home");
             }
