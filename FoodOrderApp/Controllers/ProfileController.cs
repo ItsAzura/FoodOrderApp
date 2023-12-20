@@ -45,8 +45,6 @@ namespace FoodOrderApp.Controllers
             return editProfileVM;
         }
 
-
-
         [HttpPost]
         public async Task<IActionResult> UpdateGeneralInfo(EditProfileViewModel editProfileVM)
         {

@@ -1,6 +1,7 @@
 ﻿using FoodOrderApp.Data;
 using FoodOrderApp.Models;
 using FoodOrderApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,22 +24,25 @@ namespace FoodOrderApp.Controllers
             _signInManager = signInManager;
         }
 
+        [Authorize]
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             //var fakeUserId = "ae8d85f9-7ea8-4f85-8664-d5f344ff5655";
+            //var fakeUserId = "e0d5d7f5-71bc-472e-be95-38669cce1849";
 
-            var loggedInUser = _userManager.FindByIdAsync(fakeUserId).Result;
+            var user = await _userManager.GetUserAsync(User);
 
-            if (loggedInUser != null)
+            //var loggedInUser = _userManager.FindByIdAsync(fakeUserId).Result;
+
+            if (user != null)
             {
 
                 CartUserViewModel cartUserViewModel = new CartUserViewModel()
                 {
-                    AppUser = loggedInUser,
+                    AppUser = user,
                     ApplicationDbContext = _applicationDbContext,
                     Carts = _applicationDbContext.Carts.Include(e => e.Foods).ToList(),
-
                 };
 
                 return View(cartUserViewModel);

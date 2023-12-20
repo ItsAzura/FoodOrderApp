@@ -26,9 +26,11 @@
             </select>
         </div>
         <div class="admin-control-center">
-            <form action="" class="form-search">
-                <span class="search-btn"><i class="fa-light fa-magnifying-glass"></i></span>
+            <form asp-action="Food" method="get" class="form-search">
                 <input id="form-search-product" type="text" class="form-search-input" placeholder="Tìm kiếm tên món..." oninput="showProduct()">
+                <button>
+                    <span class="search-btn"><i class="fa-light fa-magnifying-glass"></i></span>
+                </button>
             </form>
         </div>
         <div class="admin-control-right">

@@ -25,19 +25,31 @@ namespace FoodOrderApp.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Food(int pageNumber = 1, int pageSize = 10)
+        public async Task<IActionResult> Food(string searchTerm = null, int pageNumber = 1, int pageSize = 10)
         {
-            IEnumerable<Food> foods = await _foodRepository.GetPagingFoods(pageNumber, pageSize);
             IEnumerable<Food> allFoods = await _foodRepository.GetAll();
 
+            // Perform search if a search term is provided
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                // Assuming you want to search by food name
+                allFoods = allFoods.Where(f => f.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
+            }
+
+            // Paging logic
             int totalPageCount = (int)Math.Ceiling((double)allFoods.Count() / pageSize);
+
+            // Apply paging
+            IEnumerable<Food> foods = allFoods
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize);
 
             var pagingFoodViewModel = new PagingFoodViewModel
             {
                 Foods = foods,
                 CurrentPage = pageNumber,
                 PageSize = pageSize,
-                TotalPages = totalPageCount
+                TotalPages = totalPageCount,
             };
 
             return View("Food", pagingFoodViewModel);
