@@ -61,9 +61,129 @@ namespace FoodOrderApp.Controllers
 
                 _foodRepository.Add(food);
                 return RedirectToAction("Food", "Admin");
+
+                //TempData["ToastTitle"] = "Thông báo";
+                //TempData["ToastMessage"] = "Thêm món mới thành công";
+                //TempData["ToastType"] = "success";
             }
 
-            return PartialView("~/Views/Partial Views/Admin/_ModalAddFood.cshtml", foodViewModel);
+            TempData["ToastTitle"] = "Thông báo";
+            TempData["ToastMessage"] = "Thêm món mới thất bại";
+            TempData["ToastType"] = "error";
+            return RedirectToAction("Index", "Admin");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditFood(string id)
+        {
+
+            if (string.IsNullOrEmpty(id))
+            {
+                // Handle the case where id is not provided
+                return View("Error");
+            }
+
+            var food = await _foodRepository.GetByIdAsync(id);
+
+            if (food == null) return View("Error");
+
+            var foodVM = new EditFoodViewModel
+            {
+                Name = food.Name,
+                Description = food.Description,
+                Price = food.Price,
+                FoodCategory = food.FoodCategory,
+                URL = food.Image
+            };
+
+            return View(foodVM);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditFood(string id, EditFoodViewModel foodVM)
+        {
+            //if (!ModelState.IsValid)
+            //{
+            //    ModelState.AddModelError("", "Failed to edit club");
+            //    return View("EditFood", foodVM);
+            //}
+
+            var foodEdit = await _foodRepository.GetByIdAsyncNoTracking(id);
+
+            if (foodEdit == null)
+            {
+                return View("Error");
+            }
+
+            string imageAddress = foodEdit.Image;
+
+            if (foodVM.Image != null)
+            {
+                var photoResult = await _photoService.AddPhotoAsync(foodVM.Image);
+                imageAddress = photoResult.Url.ToString();
+
+                _ = _photoService.DeletePhotoAsync(foodEdit.Image);
+            }
+
+            var food = new Food
+            {
+                Id = id,
+                Name = foodVM.Name,
+                Description = foodVM.Description,
+                Image = imageAddress,
+                Price = foodVM.Price,
+                FoodCategory = foodVM.FoodCategory
+            };
+
+            _foodRepository.Update(food);
+
+            return RedirectToAction("Food", "Admin");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteFood(string id)
+        {
+
+            if (string.IsNullOrEmpty(id))
+            {
+                // Handle the case where id is not provided
+                return View("Error");
+            }
+
+            var food = await _foodRepository.GetByIdAsync(id);
+
+            if (food == null) return View("Error");
+
+            var foodVM = new EditFoodViewModel
+            {
+                Name = food.Name,
+                Description = food.Description,
+                Price = food.Price,
+                FoodCategory = food.FoodCategory,
+                URL = food.Image
+            };
+
+            return View(foodVM);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteFood(string id, EditFoodViewModel foodVM)
+        {
+            var foodDetails = await _foodRepository.GetByIdAsync(id);
+
+            if (foodDetails == null )
+            {
+                return View("Error");
+            }
+
+            if (!string.IsNullOrEmpty(foodDetails.Image))
+            {
+                _ = _photoService.DeletePhotoAsync(foodDetails.Image);
+            }
+
+            _foodRepository.Delete(foodDetails);
+            return RedirectToAction("Food", "Admin");
         }
     }
 }

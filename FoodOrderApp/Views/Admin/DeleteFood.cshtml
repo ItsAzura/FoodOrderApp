@@ -1,0 +1,65 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@using FoodOrderApp.Data.Enum;
+@using FoodOrderApp.Extensions;
+@using FoodOrderApp.ViewModels.Admin;
+
+@model EditFoodViewModel
+
+<div class="add-product edit-product">
+    <div class="modal-container">
+        <h3 class="modal-container-title edit-product-e">XÓA SẢN PHẨM</h3>
+        <button>
+            <a asp-controller="Admin" asp-action="Food" class="modal-close product-form">
+                <i class="fa-regular fa-xmark"></i>
+            </a>
+        </button>
+        <div class="modal-content">
+            <form method="post" asp-action="DeleteFood" enctype="multipart/form-data" class="add-product-form">
+                <div class="modal-content-left">
+                    <img src="@Model.URL" alt="" class="upload-image-preview">
+                </div>
+                <div class="modal-content-right">
+                    <div class="form-group">
+                        <label asp-for="Name" class="form-label">
+                            Tên món
+                        </label>
+                        <input asp-for="Name" id="up-hinh-anh" class="form-control" placeholder="Nhập tên món" readonly>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        @{
+                            var foodCategories = Enum.GetValues(typeof(FoodCategory)).Cast<FoodCategory>();
+                        }
+                        <label asp-for="FoodCategory" class="form-label">Loại sản phẩm</label>
+                        <select asp-for="FoodCategory" id="chon-mon" disabled>
+                            @foreach (var category in foodCategories)
+                            {
+                                <option value="@category">
+                                    @category.GetDisplayText()
+                                </option>
+                            }
+                        </select>
+                        <span asp-validation-for="FoodCategory" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price" class="form-label">Giá bán</label>
+                        <input asp-for="Price" id="gia-moi" placeholder="Nhập giá bán" class="form-control" readonly>
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="form-label">Mô tả</label>
+                        <textarea asp-for="Description" class="product-desc" id="mo-ta" placeholder="Nhập mô tả món ăn..." readonly></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <button class="form-submit btn-update-product-form edit-product-e" id="update-product-button">
+                        <span>XÓA SẢN PHẨM</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -8,6 +8,9 @@
 @using FoodOrderApp.ViewModels.Admin;
 @model PagingFoodViewModel
 
+<script src="~/js/toast-message.js"></script>
+<script src="/lib/jquery/dist/jquery.js"></script>
+
 <div class="section active product-all">
     <div class="admin-control">
         <div class="admin-control-left">
@@ -61,8 +64,12 @@
                         </div>
                         <div class="list-control">
                             <div class="list-tool">
-                                <button class="btn-edit"><i class="fa-light fa-pen-to-square"></i></button>
-                                <button class="btn-delete"><i class="fa-regular fa-trash"></i></button>
+                                <a asp-controller="Admin" asp-action="EditFood" asp-route-id="@item.Id" class="btn-edit">
+                                    <i class="fa-light fa-pen-to-square"></i>
+                                </a>
+                                <a asp-controller="Admin" asp-action="DeleteFood" asp-route-id="@item.Id" class="btn-delete">
+                                    <i class="fa-regular fa-trash"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -85,3 +92,4 @@
         </ul>
     </div>
 </div>
+

@@ -7,6 +7,7 @@ namespace FoodOrderApp.Interfaces.Admin
         Task<IEnumerable<Food>> GetPagingFoods(int pageNumber, int pageSize);
         Task<IEnumerable<Food>> GetAll();
         Task<Food> GetByIdAsync(string id);
+        Task<Food> GetByIdAsyncNoTracking(string id);
         bool Add(Food food);
         bool Update(Food food);
         bool Delete(Food food);

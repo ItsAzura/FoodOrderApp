@@ -25,3 +25,5 @@
         document.querySelector(".add-product").classList.add("open");
     });
 });
+
+

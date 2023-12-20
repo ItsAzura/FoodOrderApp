@@ -31,6 +31,11 @@ namespace FoodOrderApp.Repository.Admin
             return await _context.Foods.FirstOrDefaultAsync(i => i.Id == id);
         }
 
+        public async Task<Food> GetByIdAsyncNoTracking(string id)
+        {
+            return await _context.Foods.AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
+        }
+
         public bool Add(Food food)
         {
             _context.Add(food);

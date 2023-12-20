@@ -29,6 +29,8 @@ builder.Services.AddSession();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie();
 
+//builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
+
 
 var app = builder.Build();
 
@@ -58,5 +60,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+//app.UseMvcWithDefaultRoute();
 
 app.Run();
