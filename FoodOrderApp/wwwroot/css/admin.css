@@ -1352,3 +1352,8 @@ label a {
     font-size: 80px;
     margin-top: 30px;
 }
+
+.add-product.edit-product .modal-container{
+    max-height: unset;
+    padding: 20px;
+}

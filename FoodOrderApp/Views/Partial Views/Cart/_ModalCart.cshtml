@@ -1,0 +1,76 @@
+﻿@using FoodOrderApp.Models.ViewModels;
+@using FoodOrderApp.ViewModels;
+@model FoodListViewModel
+
+<div class="modal-cart">
+    <div class="cart-container">
+        <div class="cart-header">
+            <h3 class="cart-header-title"><i class="fa-regular fa-basket-shopping-simple"></i> Giỏ hàng</h3>
+            <button class="cart-close" onclick="closeCart()"><i class="fa-sharp fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="cart-body">
+            @{
+                var userCart = Model.Carts.FirstOrDefault(cart => cart.AppUserId == Model.AppUser.Id);
+                var userCartDetails = Model.CartDetails.Where(cartDetail => cartDetail.CartId == userCart?.Id).ToList();
+
+                if (userCart == null || userCart.Foods.Count == 0)
+                {
+                    <div class="gio-hang-trong">
+                        <i class="fa-thin fa-cart-xmark"></i>
+                        <p>Không có sản phẩm nào trong giỏ hàng của bạn</p>
+                    </div>
+                }
+                else
+                {
+                    <ul class="cart-list">
+                        @foreach (var item in userCartDetails)
+                        {
+                            <partial name="~/Views/Partial Views/Cart/_ModelCartItem.cshtml" model="item" />
+                        }
+                    </ul>
+                }
+            }
+
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total-price">
+                <p class="text-tt">Tổng tiền:</p>
+                <p class="text-price">
+                    @{
+                        string displayText = "";                        
+
+                        if (userCart == null || userCart.Foods.Count == 0)
+                        {
+                            displayText = "0Đ";
+                        }
+                        else
+                        {
+                            decimal price = 0;
+                            @foreach (var item in userCart.Foods)
+                            {
+                                price += item.Food.Price * item.Quantity;
+                            }
+                            displayText = $"{price} Đ";
+                        }
+
+                        @displayText
+                    }
+                </p>
+            </div>
+            <div class="cart-footer-payment">
+                <button class="them-mon" onclick="closeCart()"><i class="fa-regular fa-plus"></i> Thêm món</button>
+                @{
+                    bool isDisabled = true;
+
+                    isDisabled = userCart?.Foods.Count() <= 0;
+                }
+                <button class="thanh-toan @(isDisabled ? "disabled" : "")" onclick="location.href='@Url.Action("Index", "Payment", new { CartAppUserId = userCart?.AppUserId})'">Thanh toán</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/Cart/CartHandler.js" asp-append-version="true"></script>
+
+
+

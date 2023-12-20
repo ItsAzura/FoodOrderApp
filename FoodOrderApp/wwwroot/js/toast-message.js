@@ -2,19 +2,19 @@
 function toast({
     title = 'Success',
     message = 'Tạo tài khoản thành công',
-    type = 'success', 
+    type = 'success',
     duration = 3000
-}){
+}) {
     const main = document.getElementById('toast');
-    if(main){
+    if (main) {
         const toast = document.createElement('div');
         //Auto remove toast
-        const autoRemove = setTimeout(function(){
+        const autoRemove = setTimeout(function () {
             main.removeChild(toast);
-        },duration+1000);
+        }, duration + 1000);
         //Remove toast when click btn close
-        toast.onclick = function(e){
-            if(e.target.closest('.fa-regular')){
+        toast.onclick = function (e) {
+            if (e.target.closest('.fa-regular')) {
                 main.removeChild(toast);
                 clearTimeout(autoRemove);
             }
@@ -52,6 +52,6 @@ function toast({
     </div>
     <div class="toast__background"style="background-color: ${color};">
     </div>`
-    main.appendChild(toast);
+        main.appendChild(toast);
     }
 }
