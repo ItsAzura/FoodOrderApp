@@ -192,6 +192,8 @@
     transform: scale(0.98);
 }
 
+
+
 @media (max-width: 575.98px){
     .toast {
         min-width: 300px;
