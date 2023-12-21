@@ -1,6 +1,7 @@
 ﻿using FoodOrderApp.Data;
 using FoodOrderApp.Data.Enum;
 using FoodOrderApp.Models;
+using FoodOrderApp.Models.ViewModels;
 using FoodOrderApp.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -45,7 +46,12 @@ namespace FoodOrderApp.Controllers
                 CartUserDetails = cartDetails
             };
 
-            return View(payment);
+            var foodListViewModel = new FoodListViewModel()
+            {
+                PaymentViewModel = payment
+            };
+
+            return View(foodListViewModel);
         }
 
         [HttpPost]

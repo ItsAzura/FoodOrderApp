@@ -16,7 +16,7 @@
                 <li><a><i class="fa-light fa-circle-user"></i>Admin panel</a></li>
             }
             <li><a asp-controller="Profile" asp-action="Index"><i class="fa-light fa-circle-user"></i> Tài khoản của tôi</a></li>
-            <li><a><i class="fa-regular fa-bags-shopping"></i> Đơn hàng đã mua</a></li>
+            <li><a asp-controller="OrderHistory" asp-action="Index"><i class="fa-regular fa-bags-shopping"></i> Đơn hàng đã mua</a></li>
             <li class="border"><a id="logout" asp-controller="Home" asp-action="Logout"><i class="fa-light fa-right-from-bracket"></i> Thoát tài khoản</a></li>
         </ul>
     </li>

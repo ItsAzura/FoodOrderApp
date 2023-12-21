@@ -1,7 +1,9 @@
 ﻿using FoodOrderApp.Data;
 using FoodOrderApp.Helpers;
 using FoodOrderApp.Models;
+using FoodOrderApp.Models.ViewModels;
 using FoodOrderApp.ViewModels;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.DiaSymReader;
@@ -24,8 +26,8 @@ namespace FoodOrderApp.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            var response = new RegisterViewModel();
-            return View(response);
+            var response = new FoodListViewModel();
+            return View(response.RegisterViewModel);
         }
 
         [HttpPost]
@@ -57,6 +59,7 @@ namespace FoodOrderApp.Controllers
             };
 
             var newUserResponse = await _userManager.CreateAsync(newUser, registerViewModel.Password);
+
             if (newUserResponse.Succeeded)
             {
                 await _userManager.AddToRoleAsync(newUser, UserRoles.User);
@@ -81,25 +84,27 @@ namespace FoodOrderApp.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            var response = new LoginViewModel();
-            return View(response);
+            //var response = new LoginViewModel();
+            var response = new FoodListViewModel();
+            return View(response.LoginViewModel);
         }
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
-        {
-            if (!ModelState.IsValid) return View(loginViewModel);
 
-            var checkEmail = loginViewModel.EmailAddress;
+        [HttpPost]
+        public async Task<IActionResult> Login(FoodListViewModel foodListViewModel)
+        {
+            if (!ModelState.IsValid) return View(foodListViewModel.LoginViewModel);
+
+            var checkEmail = foodListViewModel.LoginViewModel.EmailAddress;
             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == checkEmail);
 
             if (user != null)
             {
                 //User is found, check password
-                var passwordCheck = await _userManager.CheckPasswordAsync(user, loginViewModel.Password);
+                var passwordCheck = await _userManager.CheckPasswordAsync(user, foodListViewModel.LoginViewModel.Password);
                 if (passwordCheck)
                 {
                     //Password correct, sign in
-                    var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
+                    var result = await _signInManager.PasswordSignInAsync(user, foodListViewModel.LoginViewModel.Password, false, false);
                     if (result.Succeeded)
                     {
                         return RedirectToAction("Index", "Home");
@@ -107,11 +112,11 @@ namespace FoodOrderApp.Controllers
                 }
                 //Password is incorrect
                 ModelState.AddModelError(string.Empty, "Sai mật khẩu!");
-                return View(loginViewModel);
+                return View(foodListViewModel.LoginViewModel);
             }
             //User not found
             ModelState.AddModelError(string.Empty, "Địa chỉ email không tồn tại!");
-            return View(loginViewModel);
+            return View(foodListViewModel.LoginViewModel);
         }
 
     }

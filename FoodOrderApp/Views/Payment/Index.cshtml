@@ -1,8 +1,9 @@
 ﻿@using FoodOrderApp.Data.Enum;
 @using FoodOrderApp.Data.Enum.EnumAttributes;
 @using FoodOrderApp.Extensions;
+@using FoodOrderApp.Models.ViewModels;
 @using FoodOrderApp.ViewModels;
-@model PaymentViewModel
+@model FoodListViewModel
 
 @{
     const decimal DELIVERY_COST = 30000;
@@ -131,7 +132,7 @@
             <p class="checkout-content-label">Đơn hàng</p>
             <div class="bill-total" id="list-order-checkout">
                 @{
-                    foreach (var cartDetail in Model.CartUserDetails)
+                    foreach (var cartDetail in Model.PaymentViewModel.CartUserDetails)
                     {
                         <partial name="~/Views/Partial Views/Payment/_FoodTotalCheckOut.cshtml" model="cartDetail" />
                     }
@@ -142,13 +143,13 @@
                     <div class="priceFlx">
                         <div class="text">
                             Tiền hàng
-                            <span class="count">@Model.CartUserDetails.Count món</span>
+                            <span class="count">@Model.PaymentViewModel.CartUserDetails.Count món</span>
                         </div>
                         <div class="price-detail">
                             <span id="checkout-cart-total">
                                 @{
                                     decimal totalPrice = 0;
-                                    foreach (var cart in Model.CartUserDetails)
+                                    foreach (var cart in Model.PaymentViewModel.CartUserDetails)
                                     {
                                         totalPrice += cart.Food.Price * cart.Quantity;
                                     }
@@ -180,7 +181,7 @@
                 </div>
             </div>
             @{
-                var appUserIdJson = Json.Serialize(Model.CartUser.AppUserId);
+                var appUserIdJson = Json.Serialize(Model.PaymentViewModel.CartUser.AppUserId);
             }
             <button class="complete-checkout-btn" onclick='PlaceOrder(@appUserIdJson)'>Đặt hàng</button>
         </div>

@@ -1,5 +1,6 @@
-﻿@using FoodOrderApp.ViewModels;
-@model OrderHistoryViewModel
+﻿@using FoodOrderApp.Models.ViewModels;
+@using FoodOrderApp.ViewModels;
+@model FoodListViewModel
 
 <div class="container open" id="order-history">
     <div class="main-account">
@@ -10,7 +11,7 @@
         <div class="main-account-body">
             <div class="order-history-section">
                 @{
-                    var UserOrder = Model.Order.Where(order => order.AppUserId == Model.AppUser.Id).ToList();                  
+                    var UserOrder = Model.OrderHistoryViewModel.Order.Where(order => order.AppUserId == Model.AppUser.Id).ToList();                  
 
                     if (UserOrder.Count() <= 0)
                     {

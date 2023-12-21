@@ -1,4 +1,4 @@
-﻿//Toast message
+//Toast message
 function toast({
     title = 'Success',
     message = 'Tạo tài khoản thành công',

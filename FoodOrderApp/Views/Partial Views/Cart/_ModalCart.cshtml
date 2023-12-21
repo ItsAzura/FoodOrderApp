@@ -1,5 +1,6 @@
-﻿@using FoodOrderApp.ViewModels;
-@model CartUserViewModel
+﻿@using FoodOrderApp.Models.ViewModels;
+@using FoodOrderApp.ViewModels;
+@model FoodListViewModel
 
 <div class="modal-cart">
     <div class="cart-container">
@@ -10,6 +11,7 @@
         <div class="cart-body">
             @{
                 var userCart = Model.Carts.FirstOrDefault(cart => cart.AppUserId == Model.AppUser.Id);
+                var userCartDetails = Model.CartDetails.Where(cartDetail => cartDetail.CartId == userCart?.Id).ToList();
 
                 if (userCart == null || userCart.Foods.Count == 0)
                 {
@@ -21,7 +23,7 @@
                 else
                 {
                     <ul class="cart-list">
-                        @foreach (var item in userCart.Foods)
+                        @foreach (var item in userCartDetails)
                         {
                             <partial name="~/Views/Partial Views/Cart/_ModelCartItem.cshtml" model="item" />
                         }

@@ -1,5 +1,6 @@
 ﻿using FoodOrderApp.Data;
 using FoodOrderApp.Models;
+using FoodOrderApp.Models.ViewModels;
 using FoodOrderApp.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -38,7 +39,13 @@ namespace FoodOrderApp.Controllers
                     Order = _applicationDbContext.Orders.Include(e => e.Foods).ThenInclude(od => od.Food).ToList()
                 };
 
-                return View(orderHistoryViewModel);
+                var foodListViewModel = new FoodListViewModel()
+                {
+                    AppUser = loggedInUser,
+                    OrderHistoryViewModel = orderHistoryViewModel                    
+                };
+
+                return View(foodListViewModel);
             }
 
             return View();
