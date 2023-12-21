@@ -1,4 +1,5 @@
 ﻿using FoodOrderApp.Data;
+using FoodOrderApp.Extensions;
 using FoodOrderApp.Helpers;
 using FoodOrderApp.Interfaces.Admin;
 using FoodOrderApp.Models;
@@ -25,7 +26,8 @@ namespace FoodOrderApp.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Food(string searchTerm = null, int pageNumber = 1, int pageSize = 10)
+        [HttpGet]
+        public async Task<IActionResult> Food(string searchTerm = null, string foodCategory = null, int pageNumber = 1, int pageSize = 10)
         {
             IEnumerable<Food> allFoods = await _foodRepository.GetAll();
 
@@ -50,6 +52,7 @@ namespace FoodOrderApp.Controllers
                 CurrentPage = pageNumber,
                 PageSize = pageSize,
                 TotalPages = totalPageCount,
+                SearchTerm = searchTerm,
             };
 
             return View("Food", pagingFoodViewModel);
