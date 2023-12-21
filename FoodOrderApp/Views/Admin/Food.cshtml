@@ -11,30 +11,26 @@
 <script src="~/js/toast-message.js"></script>
 <script src="/lib/jquery/dist/jquery.js"></script>
 
+@{
+    
+}
+
 <div class="section active product-all">
     <div class="admin-control">
-        <div class="admin-control-left">
-            <select name="the-loai" id="the-loai" onchange="showProduct()">
-                <option>Tất cả</option>
-                <option>Món chay</option>
-                <option>Món mặn</option>
-                <option>Món lẩu</option>
-                <option>Món ăn vặt</option>
-                <option>Món tráng miệng</option>
-                <option>Nước uống</option>
-                <option>Đã xóa</option>
-            </select>
-        </div>
         <div class="admin-control-center">
-            <form asp-action="Food" method="get" class="form-search">
-                <input id="form-search-product" type="text" class="form-search-input" placeholder="Tìm kiếm tên món..." oninput="showProduct()">
-                <button>
+            <form asp-action="Food" asp-controller="Admin" method="get" class="form-search">
+                <input type="text" name="searchTerm" value="@Model.SearchTerm" class="form-search-input" placeholder="Tìm kiếm tên món..." style="padding: 20px"/>
+                <button type="submit">
                     <span class="search-btn"><i class="fa-light fa-magnifying-glass"></i></span>
                 </button>
             </form>
         </div>
         <div class="admin-control-right">
-            <button class="btn-control-large" id="btn-cancel-product" onclick="cancelSearchProduct()"><i class="fa-light fa-rotate-right"></i> Làm mới</button>
+            <button class="btn-control-large" id="btn-cancel-product">
+                <a asp-controller="Admin" asp-action="Food" style="color: white">
+                    <i class="fa-light fa-rotate-right"></i> Làm mới
+                </a>
+            </button>
             <button class="btn-control-large" id="btn-add-product"><i class="fa-light fa-plus"></i> Thêm món mới</button>
         </div>
     </div>

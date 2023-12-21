@@ -1,5 +1,4 @@
 ﻿using FoodOrderApp.Data;
-using FoodOrderApp.Data;
 using FoodOrderApp.Data.Enum;
 using FoodOrderApp.Models;
 using FoodOrderApp.ViewModels;
@@ -81,6 +80,8 @@ namespace FoodOrderApp.Controllers
             #endregion
 
             #region "Cart"
+            var user = await _userManager.GetUserAsync(User);
+
             var user = await _userManager.GetUserAsync(User);
 
             if (user != null)
@@ -185,8 +186,6 @@ namespace FoodOrderApp.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-
 
         public async Task<IActionResult> Logout()
         {
