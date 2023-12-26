@@ -9,7 +9,7 @@ namespace FoodOrderApp.Helpers
         {
             // Get the highest existing Cart ID for the given user
             string highestId = context.Carts
-                .Where(c => c.AppUserId == user.Id)
+                //.Where(c => c.AppUserId == user.Id)
                 .Select(c => c.Id)
                 .OrderByDescending(id => id)
                 .FirstOrDefault();
@@ -26,7 +26,7 @@ namespace FoodOrderApp.Helpers
         private static string GetNextNumberPart(string id)
         {
             // Extract the numeric part from the ID
-            string numberPart = id?.Substring(1);
+            string numberPart = id?.Substring(2);
 
             if (int.TryParse(numberPart, out int number))
             {
