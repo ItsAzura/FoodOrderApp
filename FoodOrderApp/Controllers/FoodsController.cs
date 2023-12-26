@@ -9,24 +9,29 @@ using FoodOrderApp.Data;
 using FoodOrderApp.Models;
 using FoodOrderApp.Data.Enum;
 using FoodOrderApp.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace FoodOrderApp.Controllers
 {
 
     public class FoodsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _applicationDbContext;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
         public int PageSize = 8;
 
-        public FoodsController(ApplicationDbContext context)
+        public FoodsController(ApplicationDbContext applicationDbContext, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
-            _context = context;
+            _applicationDbContext = applicationDbContext;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         // GET: Foods
         public async Task<IActionResult> Index(int foodPage = 1)
         {
-            var applicationDbcontext = _context.Foods
+            var applicationDbcontext = _applicationDbContext.Foods
                 .Skip((foodPage - 1) * PageSize)
                 .Take(PageSize);
             return View(await applicationDbcontext.ToListAsync());
@@ -35,12 +40,12 @@ namespace FoodOrderApp.Controllers
         // GET: Foods/Details/5
         public async Task<IActionResult> Details(string id)
         {
-            if (id == null || _context.Foods == null)
+            if (id == null || _applicationDbContext.Foods == null)
             {
                 return NotFound();
             }
 
-            var food = await _context.Foods
+            var food = await _applicationDbContext.Foods
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (food == null)
             {
@@ -65,8 +70,8 @@ namespace FoodOrderApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(food);
-                await _context.SaveChangesAsync();
+                _applicationDbContext.Add(food);
+                await _applicationDbContext.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(food);
@@ -75,12 +80,12 @@ namespace FoodOrderApp.Controllers
         // GET: Foods/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
-            if (id == null || _context.Foods == null)
+            if (id == null || _applicationDbContext.Foods == null)
             {
                 return NotFound();
             }
 
-            var food = await _context.Foods.FindAsync(id);
+            var food = await _applicationDbContext.Foods.FindAsync(id);
             if (food == null)
             {
                 return NotFound();
@@ -104,8 +109,8 @@ namespace FoodOrderApp.Controllers
             {
                 try
                 {
-                    _context.Update(food);
-                    await _context.SaveChangesAsync();
+                    _applicationDbContext.Update(food);
+                    await _applicationDbContext.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -126,12 +131,12 @@ namespace FoodOrderApp.Controllers
         // GET: Foods/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
-            if (id == null || _context.Foods == null)
+            if (id == null || _applicationDbContext.Foods == null)
             {
                 return NotFound();
             }
 
-            var food = await _context.Foods
+            var food = await _applicationDbContext.Foods
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (food == null)
             {
@@ -146,23 +151,23 @@ namespace FoodOrderApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            if (_context.Foods == null)
+            if (_applicationDbContext.Foods == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Foods'  is null.");
             }
-            var food = await _context.Foods.FindAsync(id);
+            var food = await _applicationDbContext.Foods.FindAsync(id);
             if (food != null)
             {
-                _context.Foods.Remove(food);
+                _applicationDbContext.Foods.Remove(food);
             }
-            
-            await _context.SaveChangesAsync();
+
+            await _applicationDbContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool FoodExists(string id)
         {
-          return (_context.Foods?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_applicationDbContext.Foods?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
         // GET: Foods/Category/MonChay
@@ -171,7 +176,7 @@ namespace FoodOrderApp.Controllers
             ViewData["MinPrice"] = minPrice;
             ViewData["MaxPrice"] = maxPrice;
 
-            if (_context.Foods == null)
+            if (_applicationDbContext.Foods == null)
             {
                 return Problem("null");
             }
@@ -181,13 +186,13 @@ namespace FoodOrderApp.Controllers
             switch (sortOrder)
             {
                 case "asc":
-                    foodsQuery = _context.Foods.Where(f => f.FoodCategory == foodCategory).OrderBy(f => f.Price);
+                    foodsQuery = _applicationDbContext.Foods.Where(f => f.FoodCategory == foodCategory).OrderBy(f => f.Price);
                     break;
                 case "desc":
-                    foodsQuery = _context.Foods.Where(f => f.FoodCategory == foodCategory).OrderByDescending(f => f.Price);
+                    foodsQuery = _applicationDbContext.Foods.Where(f => f.FoodCategory == foodCategory).OrderByDescending(f => f.Price);
                     break;
                 default:
-                    foodsQuery = _context.Foods.Where(f => f.FoodCategory == foodCategory);
+                    foodsQuery = _applicationDbContext.Foods.Where(f => f.FoodCategory == foodCategory);
                     break;
             }
 
@@ -210,24 +215,51 @@ namespace FoodOrderApp.Controllers
                 .Take(PageSize)
                 .ToListAsync();
 
-            return View
+            #region "Cart"
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user != null)
+            {
+                //CartUserViewModel cartUserViewModel = new CartUserViewModel()
+                //{
+                //    AppUser = user,
+                //    ApplicationDbContext = _applicationDbContext,
+                //    Carts = _applicationDbContext.Carts.Include(e => e.Foods).ToList(),
+                //};
+
+                /*return View(cartUserViewModel)*/
+                ;
+
+                var cartDetails = _applicationDbContext.Carts
+                .SelectMany(e => e.Foods)
+                .Include(cd => cd.Food).ToList();
+
+                return View
                 (
-                new FoodListViewModel
-                {
-                    CurrentCategory = foodCategory.ToString(),
-                    Foods = foods,
-                    PagingInfo = new PagingInfo
+                    new FoodListViewModel
                     {
-                        ItemsPerPage = PageSize,
-                        CurrentPage = foodPage,
-                        TotalItems = totalItems,
-                        SortOrder = sortOrder
+                        CurrentCategory = foodCategory.ToString(),
+                        AppUser = user,
+                        ApplicationDbContext = _applicationDbContext,
+                        Carts = _applicationDbContext.Carts.Include(e => e.Foods).ToList(),
+                        CartDetails = cartDetails,
+                        Foods = foods,
+                        PagingInfo = new PagingInfo
+                        {
+                            ItemsPerPage = 8,
+                            CurrentPage = foodPage,
+                            TotalItems = foodsQuery.Count(),
+                            SortOrder = sortOrder
+                        }
                     }
-                }
                 );
+            }
+
+            return View();
+            #endregion
+
+
         }
-
-
-    }
-}
+    
+    } }
  

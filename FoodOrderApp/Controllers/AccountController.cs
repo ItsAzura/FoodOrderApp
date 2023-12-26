@@ -66,7 +66,7 @@ namespace FoodOrderApp.Controllers
 
                 Cart newCart = new Cart()
                 {
-                    Id = CartIdGenerator.GenerateNextCartId(_context, newUser),
+                    Id = CartIdGenerator.GenerateNextCartId(_context, newUser), //Lỗi trùng key khi tạo cart mới có thẻ là do cái GenerateNextCartId bị lỗi
                     AppUserId = newUser.Id,
                 };
 
