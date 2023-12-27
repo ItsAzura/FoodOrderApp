@@ -194,7 +194,18 @@ function PlaceOrder(AppUserIdJSON) {
             }
             return response.json();
         })
-        .then(data => console.log(data))
+        .then(data => {
+            // Handle success
+            console.log(data);
+
+            // Assuming data contains information about the success of the operation
+            if (data.success) {
+                // Redirect to the OrderHistory/Index page
+                window.location.href = '/OrderHistory/Index';
+            } else {
+                // Handle any other logic for failure
+            }
+        })
         .catch(handleError);
 }
 

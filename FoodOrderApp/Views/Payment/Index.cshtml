@@ -183,7 +183,7 @@
             @{
                 var appUserIdJson = Json.Serialize(Model.PaymentViewModel.CartUser.AppUserId);
             }
-            <a button type="button" class="complete-checkout-btn" onclick='PlaceOrder(@appUserIdJson)' asp-controller="OrderHistory" asp-action="Index">Đặt hàng</a>
+            <a button type="button" class="complete-checkout-btn" onclick='PlaceOrder(@appUserIdJson)'>Đặt hàng</a>
         </div>
     </main>
 </div>

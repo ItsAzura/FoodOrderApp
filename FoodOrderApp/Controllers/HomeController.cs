@@ -11,6 +11,8 @@ using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Drawing.Printing;
+using FoodOrderApp.Helpers;
+using CloudinaryDotNet.Actions;
 
 namespace FoodOrderApp.Controllers
 {
@@ -119,6 +121,59 @@ namespace FoodOrderApp.Controllers
 
             return View();
             #endregion
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddToCartDetail([FromBody] AddToCart model)
+        {
+            try
+            {
+                var user = await _userManager.GetUserAsync(User);
+
+                if (user == null)
+                {
+                    return BadRequest("User not found."); // Return a meaningful error response
+                }
+
+                var cartUser = _applicationDbContext.Carts
+                    .Include(c => c.Foods)
+                    .FirstOrDefault(e => e.AppUserId == user.Id);
+
+                if (cartUser == null)
+                {
+                    return BadRequest("Cart not found for the user."); // Return a meaningful error response
+                }
+
+                var nextCartDetailId = CartDetailIdGenerator.GenerateNextCartDetailId(_applicationDbContext, user);
+
+                CartDetail cartDetail = new CartDetail()
+                {
+                    Id = nextCartDetailId,
+                    Quantity = 1,
+                    Noted = model.Noted,
+                    CartId = cartUser.Id,
+                    FoodId = model.ProductId
+                };
+
+                cartUser.Foods.Add(cartDetail);
+                await _applicationDbContext.SaveChangesAsync();
+
+                return Ok("Product added to cart successfully."); // Return a success response
+            }
+            catch (Exception ex)
+            {
+                // Log the exception for debugging purposes
+                Console.WriteLine($"Error: {ex.Message}");
+
+                return StatusCode(500, "Internal server error"); // Return a generic error response
+            }
+        }
+
+
+        public class AddToCart
+        {
+            public string ProductId { get; set; }
+            public string Noted { get; set; }
         }
 
         [HttpPost]

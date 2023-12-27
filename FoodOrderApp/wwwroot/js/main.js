@@ -74,7 +74,7 @@ async function detailProduct(event, productId) {
                 </div>
                 <div class="modal-footer-control">
                     <button class="button-dathangngay" data-product="${infoProduct.id}" onclick="detailProduct(event, '${infoProduct.id}')">Đặt hàng ngay</button>
-                    <button class="button-dat" id="add-cart" onclick="animationCart()"><i class="fa-light fa-basket-shopping"></i></button>
+                    <button class="button-dat" id="add-cart" onclick="addToCart('${productId}')"><i class="fa-light fa-basket-shopping"></i></button>
                 </div>
             </div>`;
 
