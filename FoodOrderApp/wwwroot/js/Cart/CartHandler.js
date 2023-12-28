@@ -29,6 +29,34 @@ function closeCart() {
     })
 }
 
+function addToCart(productId) {
+    var textNoted = document.querySelector('.text-note');
+    var textValue = textNoted.value;
+
+    console.log(`Product id: ${productId} and textValue: ${textValue}`);
+
+    fetch('/Home/AddToCartDetail', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ ProductId: productId, Noted: textValue })
+    })
+        .then(response => {
+            if (response.ok) {
+                // Reload the page after a successful request
+                window.location.reload();
+            } else {
+                throw new Error('Failed to add to cart');
+            }
+        })
+        .catch(error => {
+            // Handle error if needed
+            console.error('Error:', error.message);
+        });
+}
+
+
 function increasingNumber(e) {
     if (e && e.parentNode) {
         let qty = e.parentNode.querySelector('.input-qty');
