@@ -1,11 +1,13 @@
 ﻿using FoodOrderApp.Data;
 using FoodOrderApp.Models;
 using FoodOrderApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodOrderApp.Controllers
 {
+    [Authorize]
     public class ProfileController : Controller
     {
         private readonly UserManager<AppUser> _userManager;

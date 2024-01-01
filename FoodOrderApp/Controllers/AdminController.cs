@@ -5,12 +5,14 @@ using FoodOrderApp.Helpers;
 using FoodOrderApp.Interfaces.Admin;
 using FoodOrderApp.Models;
 using FoodOrderApp.ViewModels.Admin;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodOrderApp.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class AdminController : Controller
     {
         private readonly IFoodRepository _foodRepository;

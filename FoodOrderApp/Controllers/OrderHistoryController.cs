@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FoodOrderApp.Controllers
 {
+    [Authorize]
     public class OrderHistoryController : Controller
     {
         private readonly UserManager<AppUser> _userManager;

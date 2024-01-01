@@ -3,12 +3,14 @@ using FoodOrderApp.Data.Enum;
 using FoodOrderApp.Models;
 using FoodOrderApp.Models.ViewModels;
 using FoodOrderApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodOrderApp.Controllers
 {
+    [Authorize]
     public class PaymentController : Controller
     {
         private readonly UserManager<AppUser> _userManager;
