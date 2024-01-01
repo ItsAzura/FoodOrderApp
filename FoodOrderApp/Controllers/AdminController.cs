@@ -1,10 +1,13 @@
 ﻿using FoodOrderApp.Data;
+using FoodOrderApp.Data.Enum;
 using FoodOrderApp.Extensions;
 using FoodOrderApp.Helpers;
 using FoodOrderApp.Interfaces.Admin;
 using FoodOrderApp.Models;
 using FoodOrderApp.ViewModels.Admin;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FoodOrderApp.Controllers
 {
@@ -13,17 +16,53 @@ namespace FoodOrderApp.Controllers
         private readonly IFoodRepository _foodRepository;
         private readonly IPhotoService _photoService;
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
-        public AdminController(IFoodRepository foodRepository, IPhotoService photoService, ApplicationDbContext context)
+        public AdminController(IFoodRepository foodRepository, IPhotoService photoService, ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             this._foodRepository = foodRepository;
             this._photoService = photoService;
             this._context = context;
+            this._userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            // Counting users
+            var userRole = await _context.Roles
+                .Where(r => r.Name == "user")
+                .FirstOrDefaultAsync();
+            var usersWithUserRole = await _context.Users
+                .Where(u => _context.UserRoles.Any(ur => ur.UserId == u.Id && ur.RoleId == userRole.Id))
+                .ToListAsync();
+            int userQuantity = usersWithUserRole.Count();
+            // Coungting product
+            int productQuantity = _context.Foods.Count();
+            // Calculating revenue
+            decimal revenue = 0;
+            var orders = _context.Orders.Include(e => e.Foods).ThenInclude(od => od.Food).ToList();
+            foreach (var order in orders)
+            {
+                if (order.Foods != null)
+                {
+                    foreach (var orderDetail in order.Foods)
+                    {
+                        if (orderDetail != null && orderDetail.Food != null)
+                        {
+                            revenue += orderDetail.Quantity * orderDetail.Food.Price;
+                        }
+                    }
+                }
+            }
+
+            AdminHomeViewModel homeVM = new AdminHomeViewModel
+            {
+                UserQuantity = userQuantity.ToString(),
+                ProductQuantity = productQuantity.ToString(),
+                Revenue = revenue.ToString()
+            };
+
+            return View(homeVM);
         }
 
         [HttpGet]
@@ -187,7 +226,7 @@ namespace FoodOrderApp.Controllers
         {
             var foodDetails = await _foodRepository.GetByIdAsync(id);
 
-            if (foodDetails == null )
+            if (foodDetails == null)
             {
                 return View("Error");
             }
@@ -199,6 +238,28 @@ namespace FoodOrderApp.Controllers
 
             _foodRepository.Delete(foodDetails);
             return RedirectToAction("Food", "Admin");
+        }
+
+        public IActionResult CustomerOrder()
+        {
+            var orders = _context.Orders.Include(o => o.Foods).ThenInclude(od => od.Food).ToList();
+            return View(orders);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateOrderStatus(int orderId)
+        {
+            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == orderId);
+            if (order != null)
+            {
+                order.OrderStatus = order.OrderStatus == 0 ? OrderStatusCategory.DaXuLy : OrderStatusCategory.DangXuLy;
+                _context.Orders.Update(order);
+                _context.SaveChanges();
+
+                return RedirectToAction("CustomerOrder", "Admin");
+            }
+
+            return View();
         }
     }
 }

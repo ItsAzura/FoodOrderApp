@@ -1,0 +1,88 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using FoodOrderApp.Data.Enum;
+@using FoodOrderApp.Extensions;
+@using System.Globalization;
+@model Order
+
+<div class="modal detail-order"" id="order-detail-modal-@Model.Id" >
+    <div class="modal-container">
+        <h3 class="modal-container-title">CHI TIẾT ĐƠN HÀNG</h3>
+        <button class="modal-close"><i class="fa-regular fa-xmark"></i></button>
+        <div class="modal-detail-order">
+            @* Modal detail left *@
+            <div class="modal-detail-left">
+                @foreach (var orderDetail in Model.Foods)
+                {
+                    @Html.Partial("~/Views/Shared/_AdminOrderProductDetail.cshtml", orderDetail)
+                }
+            </div>
+            @* Modal detail right *@
+            <div class="modal-detail-right">
+                <ul class="detail-order-group">
+                    <li class="detail-order-item">
+                        <span class="detail-order-item-left"><i class="fa-light fa-calendar-days"></i> Ngày đặt hàng</span>
+                        <span class="detail-order-item-right">@Model.OrderDate.Value.Date</span>
+                    </li>
+                    <li class="detail-order-item">
+                        <span class="detail-order-item-left"><i class="fa-light fa-truck"></i> Hình thức giao</span>
+                        <span class="detail-order-item-right">@Model.FormDelivery.GetDisplayText()</span>
+                    </li>
+                    <li class="detail-order-item">
+                        <span class="detail-order-item-left"><i class="fa-thin fa-person"></i> Người nhận</span>
+                        <span class="detail-order-item-right">@Model.Receiver</span>
+                    </li>
+                    <li class="detail-order-item">
+                        <span class="detail-order-item-left"><i class="fa-light fa-phone"></i> Số điện thoại</span>
+                        <span class="detail-order-item-right">@Model.PhoneNumber</span>
+                    </li>
+                    <li class="detail-order-item tb">
+                        <span class="detail-order-item-left"><i class="fa-light fa-clock"></i> Thời gian giao</span>
+                        <p class="detail-order-item-b">@Model.OrderDate</p>
+                    </li>
+                    <li class="detail-order-item tb">
+                        <span class="detail-order-item-t"><i class="fa-light fa-location-dot"></i> Địa chỉ nhận</span>
+                        <p class="detail-order-item-b">@Model.Location</p>
+                    </li>
+                    <li class="detail-order-item tb">
+                        <span class="detail-order-item-t"><i class="fa-light fa-note-sticky"></i> Ghi chú</span>
+                        <p class="detail-order-item-b">@Model.Note</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="modal-detail-bottom">
+            <div class="modal-detail-bottom-left">
+                <div class="price-total">
+                    <span class="thanhtien">Thành tiền</span>
+                    <span class="price">
+                        @{
+                            decimal totalBill = 0;
+                            foreach (var orderDetail in Model.Foods)
+                            {
+                                if (orderDetail != null && orderDetail.Food != null)
+                                {
+                                    totalBill += orderDetail.Quantity * orderDetail.Food.Price;
+                                }
+                            }
+                            CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
+                        }
+                        @totalBill.ToString("#,###", cul.NumberFormat) đ
+                    </span>
+                </div>
+            </div>
+            <div class="modal-detail-bottom-right">
+                @{
+                    var classDetailBtn = Model.OrderStatus == OrderStatusCategory.DangXuLy ? "btn-chuaxuly" : "btn-daxuly";
+                    var textDetailBtn = Model.OrderStatus == OrderStatusCategory.DangXuLy ? "Chưa xử lý" : "Đã xử lý";
+
+                    <form method="post" action="@Url.Action("UpdateOrderStatus", "Admin", new { orderId = Model.Id })">
+                        <button class="modal-detail-btn @classDetailBtn" type="submit">@textDetailBtn</button>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>

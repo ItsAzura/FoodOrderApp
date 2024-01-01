@@ -14,13 +14,5 @@ namespace FoodOrderApp.Models
         [ForeignKey("Food")]
         public string FoodId { get; set; }
         public Food Food { get; set; }
-
-        //[NotMapped]
-        //public decimal Total => Quantity * Food.Price;
-        //public decimal GetTotal()
-        //{
-        //    return Quantity * Food.Price;
-        //}
-
     }
 }

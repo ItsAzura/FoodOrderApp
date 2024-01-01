@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewData["Title"] = "CustomerOrder";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model IEnumerable<Order>
+
+<div class="section active">
+    <div class="table">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <td>Mã đơn</td>
+                    <td>Khách hàng</td>
+                    <td>Ngày đặt</td>
+                    <td>Tổng tiền</td>
+                    <td>Trạng thái</td>
+                    <td>Thao tác</td>
+                </tr>
+            </thead>
+            <tbody id="showOrder">
+                @foreach (var order in Model)
+                {
+                    @Html.Partial("~/Views/Shared/_AdminOrderItem.cshtml", order)
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="~/js/admin.js" defer></script>
+<script type="text/javascript" defer>
+    document.addEventListener('DOMContentLoaded', function () {
+        const openDetailBtns = document.querySelectorAll('.btn-detail');
+        const detailModals = document.querySelectorAll('.modal.detail-order');
+        Array.from(openDetailBtns).forEach((btn, i) => {
+            btn.addEventListener('click', () => {
+                const openModal = document.querySelector(".modal.detail-order.open");
+                if (openModal) {
+                    openModal.classList.remove('open')
+                }
+                detailModals[i].classList.add("open");
+            })
+        })
+    })
+</script>
+
+

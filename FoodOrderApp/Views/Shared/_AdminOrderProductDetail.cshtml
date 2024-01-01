@@ -1,0 +1,28 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model OrderDetail
+
+<div class="order-item-group">
+    <div class="order-product">
+        <div class="order-product-left">
+            <img src="@Model.Food.Image" alt="">
+            <div class="order-product-info">
+                <h4>@Model.Food.Name</h4>
+                <p class="order-product-quantity">SL: @Model.Quantity<p>
+            </div>
+        </div>
+        <div class="order-product-right">
+            <div class="order-product-price">
+                <span class="order-product-current-price">
+                    @{
+                        decimal totalBill = Model.Quantity * Model.Food.Price;
+                    }
+                    @totalBill đ
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

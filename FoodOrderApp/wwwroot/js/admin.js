@@ -34,3 +34,16 @@ for (let i = 0; i < sidebars.length; i++) {
     };
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    const openDetailBtns = document.querySelectorAll('.btn-detail');
+    const detailModals = document.querySelectorAll('.modal.detail-order');
+    Array.from(openDetailBtns).forEach((btn, i) => {
+        btn.addEventListener('click', () => {
+            const openModal = document.querySelector(".modal.detail-order.open");
+            if (openModal) {
+                openModal.classList.remove('open')
+            }
+            detailModals[i].classList.add("open");
+        })
+    })
+})
