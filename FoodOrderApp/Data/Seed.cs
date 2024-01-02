@@ -391,7 +391,30 @@ namespace FoodOrderApp.Data
                     await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
                 if (!await roleManager.RoleExistsAsync(UserRoles.User))
                     await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+            }
+        }
 
+        // Seeding Admin User Data
+        public static async Task SeedAdminUsers(IApplicationBuilder applicationBuilder)
+        {
+            using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
+            {
+                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+                string adminUserEmail = "admin1@email.com";
+
+                var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
+                if (adminUser == null)
+                {
+                    var newAdminUser = new AppUser()
+                    {
+                        Name="Pham Van Nhat Huy1",
+                        UserName = "Nhathuy1",
+                        Email = adminUserEmail,
+                        EmailConfirmed = true
+                    };
+                    await userManager.CreateAsync(newAdminUser, "@Abc123.");
+                    await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
+                }
             }
         }
     }

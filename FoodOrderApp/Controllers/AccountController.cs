@@ -90,21 +90,21 @@ namespace FoodOrderApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(FoodListViewModel foodListViewModel)
+        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
-            if (!ModelState.IsValid) return View(foodListViewModel.LoginViewModel);
+            if (!ModelState.IsValid) return View(loginViewModel);
 
-            var checkEmail = foodListViewModel.LoginViewModel.EmailAddress;
+            var checkEmail = loginViewModel.EmailAddress;
             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == checkEmail);
 
             if (user != null)
             {
                 //User is found, check password
-                var passwordCheck = await _userManager.CheckPasswordAsync(user, foodListViewModel.LoginViewModel.Password);
+                var passwordCheck = await _userManager.CheckPasswordAsync(user, loginViewModel.Password);
                 if (passwordCheck)
                 {
                     //Password correct, sign in
-                    var result = await _signInManager.PasswordSignInAsync(user, foodListViewModel.LoginViewModel.Password, false, false);
+                    var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.Password, false, false);
                     if (result.Succeeded)
                     {
                         return RedirectToAction("Index", "Home");
@@ -112,11 +112,11 @@ namespace FoodOrderApp.Controllers
                 }
                 //Password is incorrect
                 ModelState.AddModelError(string.Empty, "Sai mật khẩu!");
-                return View(foodListViewModel.LoginViewModel);
+                return View(loginViewModel);
             }
             //User not found
             ModelState.AddModelError(string.Empty, "Địa chỉ email không tồn tại!");
-            return View(foodListViewModel.LoginViewModel);
+            return View(loginViewModel);
         }
 
     }

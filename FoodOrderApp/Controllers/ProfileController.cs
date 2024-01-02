@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FoodOrderApp.Controllers
 {
-    [Authorize]
     public class ProfileController : Controller
     {
         private readonly UserManager<AppUser> _userManager;

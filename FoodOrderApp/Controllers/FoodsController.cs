@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Identity;
 
 namespace FoodOrderApp.Controllers
 {
-
     public class FoodsController : Controller
     {
         private readonly ApplicationDbContext _applicationDbContext;
