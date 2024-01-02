@@ -22,6 +22,7 @@ namespace FoodOrderApp.Models.ViewModels
         #region "Nhat"        
         public LoginViewModel LoginViewModel { get; set; }
         public RegisterViewModel RegisterViewModel { get; set; }
+        public EditProfileViewModel EditProfileViewModel { get; set; }
         #endregion
     }
 }
