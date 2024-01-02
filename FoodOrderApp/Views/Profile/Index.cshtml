@@ -1,5 +1,6 @@
-﻿@using FoodOrderApp.ViewModels;
-@model EditProfileViewModel
+﻿@using FoodOrderApp.Models.ViewModels;
+@using FoodOrderApp.ViewModels
+@model FoodListViewModel
 
 @{
     ViewData["Title"] = "Edit Profile";
@@ -81,25 +82,25 @@
                     <form asp-controller="Profile" asp-action="UpdateGeneralInfo" class="info-user">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
-                            <label asp-for="GeneralInfo.Name" class="form-label">Họ và tên</label>
-                            <input asp-for="GeneralInfo.Name" class="form-control" id="infoname" placeholder="Thêm họ tên của bạn">
-                            <span asp-validation-for="GeneralInfo.Name" class="inforemail-error form-message"></span>
+                            <label asp-for="EditProfileViewModel.GeneralInfo.Name" class="form-label">Họ và tên</label>
+                            <input asp-for="EditProfileViewModel.GeneralInfo.Name" class="form-control" id="infoname" placeholder="Thêm họ tên của bạn">
+                            <span asp-validation-for="EditProfileViewModel.GeneralInfo.Name" class="inforemail-error form-message"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="GeneralInfo.Email" class="form-label">Email</label>
-                            <input asp-for="GeneralInfo.Email" class="form-control" id="infophone" disabled="true" placeholder="">
-                            <input type="hidden" asp-for="GeneralInfo.Email" />
-                            <span asp-validation-for="GeneralInfo.Email" class="inforemail-error form-message"></span>
+                            <label asp-for="EditProfileViewModel.GeneralInfo.Email" class="form-label">Email</label>
+                            <input asp-for="EditProfileViewModel.GeneralInfo.Email" class="form-control" id="infophone" disabled="true" placeholder="">
+                            <input type="hidden" asp-for="EditProfileViewModel.GeneralInfo.Email" />
+                            <span asp-validation-for="EditProfileViewModel.GeneralInfo.Email" class="inforemail-error form-message"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="GeneralInfo.PhoneNumber" class="form-label">Số điện thoại</label>
-                            <input asp-for="GeneralInfo.PhoneNumber" class="form-control" id="infoemail" placeholder="Thêm số điện thoại của bạn">
-                            <span asp-validation-for="GeneralInfo.PhoneNumber" class="inforemail-error form-message"></span>
+                            <label asp-for="EditProfileViewModel.GeneralInfo.PhoneNumber" class="form-label">Số điện thoại</label>
+                            <input asp-for="EditProfileViewModel.GeneralInfo.PhoneNumber" class="form-control" id="infoemail" placeholder="Thêm số điện thoại của bạn">
+                            <span asp-validation-for="EditProfileViewModel.GeneralInfo.PhoneNumber" class="inforemail-error form-message"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="GeneralInfo.Address" class="form-label">Địa chỉ</label>
-                            <input asp-for="GeneralInfo.Address" class="form-control" id="infoaddress" placeholder="Thêm địa chỉ giao hàng của bạn">
-                            <span asp-validation-for="GeneralInfo.Address" class="inforemail-error form-message"></span>
+                            <label asp-for="EditProfileViewModel.GeneralInfo.Address" class="form-label">Địa chỉ</label>
+                            <input asp-for="EditProfileViewModel.GeneralInfo.Address" class="form-control" id="infoaddress" placeholder="Thêm địa chỉ giao hàng của bạn">
+                            <span asp-validation-for="EditProfileViewModel.GeneralInfo.Address" class="inforemail-error form-message"></span>
                         </div>
                         <button type="submit" id="save-info-user" disabled><i class="fa-regular fa-floppy-disk"></i> Lưu thay đổi</button>
                         @if (ViewData.ModelState["GeneralInfo"]?.Errors != null && ViewData.ModelState["GeneralInfo"].Errors.Count > 0)
@@ -135,19 +136,19 @@
                     <form asp-controller="Profile" asp-action="UpdatePasswordInfo" class="change-password">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
-                            <label asp-for="PasswordInfo" class="form-label w60">Mật khẩu hiện tại</label>
-                            <input asp-for="PasswordInfo.CurrentPassword" class="form-control" id="password-cur-info" placeholder="Nhập mật khẩu hiện tại">
-                            <span asp-validation-for="PasswordInfo.CurrentPassword" class="password-cur-info-error form-message"></span>
+                            <label asp-for="EditProfileViewModel.PasswordInfo" class="form-label w60">Mật khẩu hiện tại</label>
+                            <input asp-for="EditProfileViewModel.PasswordInfo.CurrentPassword" class="form-control" id="password-cur-info" placeholder="Nhập mật khẩu hiện tại">
+                            <span asp-validation-for="EditProfileViewModel.PasswordInfo.CurrentPassword" class="password-cur-info-error form-message"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="PasswordInfo.NewPassword" class="form-label w60">Mật khẩu mới </label>
-                            <input asp-for="PasswordInfo.NewPassword" class="form-control" id="password-after-info" placeholder="Nhập mật khẩu mới">
-                            <span asp-validation-for="PasswordInfo.NewPassword" class="password-after-info-error form-message"></span>
+                            <label asp-for="EditProfileViewModel.PasswordInfo.NewPassword" class="form-label w60">Mật khẩu mới </label>
+                            <input asp-for="EditProfileViewModel.PasswordInfo.NewPassword" class="form-control" id="password-after-info" placeholder="Nhập mật khẩu mới">
+                            <span asp-validation-for="EditProfileViewModel.PasswordInfo.NewPassword" class="password-after-info-error form-message"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="PasswordInfo.ConfirmPassword" class="form-label w60">Xác nhận mật khẩu mới</label>
-                            <input asp-for="PasswordInfo.ConfirmPassword" class="form-control" id="password-comfirm-info" placeholder="Nhập lại mật khẩu mới">
-                            <span asp-validation-for="PasswordInfo.ConfirmPassword" class="password-after-comfirm-error form-message"></span>
+                            <label asp-for="EditProfileViewModel.PasswordInfo.ConfirmPassword" class="form-label w60">Xác nhận mật khẩu mới</label>
+                            <input asp-for="EditProfileViewModel.PasswordInfo.ConfirmPassword" class="form-control" id="password-comfirm-info" placeholder="Nhập lại mật khẩu mới">
+                            <span asp-validation-for="EditProfileViewModel.PasswordInfo.ConfirmPassword" class="password-after-comfirm-error form-message"></span>
                         </div>
                         <button type="submit" id="save-password" disabled>
                             <i class="fa-regular fa-key"></i> Đổi mật khẩu

@@ -1,5 +1,6 @@
 ﻿using FoodOrderApp.Data;
 using FoodOrderApp.Models;
+using FoodOrderApp.Models.ViewModels;
 using FoodOrderApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -20,6 +21,7 @@ namespace FoodOrderApp.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             if (TempData.ContainsKey("SuccessMessage"))
@@ -27,9 +29,11 @@ namespace FoodOrderApp.Controllers
                 ViewBag.SuccessMessage = TempData["SuccessMessage"].ToString();
             }
 
-            var model = await BuildEditProfileViewModel();
-
-            return View(model);
+            var foodListVM = new FoodListViewModel
+            {
+                EditProfileViewModel = await BuildEditProfileViewModel()
+            };
+            return View(foodListVM);
         }
 
         private async Task<EditProfileViewModel> BuildEditProfileViewModel()
@@ -37,6 +41,7 @@ namespace FoodOrderApp.Controllers
             var user = await _userManager.GetUserAsync(User);
 
             var editProfileVM = new EditProfileViewModel();
+
             editProfileVM.GeneralInfo = new GeneralInfoSection();
             editProfileVM.GeneralInfo.Name = user.Name;
             editProfileVM.GeneralInfo.Email = user.Email;
@@ -47,7 +52,7 @@ namespace FoodOrderApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateGeneralInfo(EditProfileViewModel editProfileVM)
+        public async Task<IActionResult> UpdateGeneralInfo(FoodListViewModel editProfileVM)
         {
             var user = await _userManager.GetUserAsync(User);
 
@@ -55,16 +60,16 @@ namespace FoodOrderApp.Controllers
             {
                 ModelState.Clear();
                 // Kiem tra null
-                if (string.IsNullOrEmpty(editProfileVM.GeneralInfo.Name) ||
-                    string.IsNullOrEmpty(editProfileVM.GeneralInfo.PhoneNumber) ||
-                    string.IsNullOrEmpty(editProfileVM.GeneralInfo.Address))
+                if (string.IsNullOrEmpty(editProfileVM.EditProfileViewModel.GeneralInfo.Name) ||
+                    string.IsNullOrEmpty(editProfileVM.EditProfileViewModel.GeneralInfo.PhoneNumber) ||
+                    string.IsNullOrEmpty(editProfileVM.EditProfileViewModel.GeneralInfo.Address))
                 {
                     ModelState.AddModelError("GeneralInfo", "Vui lòng điền đầy đủ thông tin!");
                     return View("Index", editProfileVM);
                 }
-                user.Name = editProfileVM.GeneralInfo.Name;
-                user.PhoneNumber = editProfileVM.GeneralInfo.PhoneNumber;
-                user.Address = editProfileVM.GeneralInfo.Address;
+                user.Name = editProfileVM.EditProfileViewModel.GeneralInfo.Name;
+                user.PhoneNumber = editProfileVM.EditProfileViewModel.GeneralInfo.PhoneNumber;
+                user.Address = editProfileVM.EditProfileViewModel.GeneralInfo.Address;
 
                 var result = await _userManager.UpdateAsync(user);
 
@@ -79,7 +84,7 @@ namespace FoodOrderApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdatePasswordInfo(EditProfileViewModel editProfileVM)
+        public async Task<IActionResult> UpdatePasswordInfo(FoodListViewModel editProfileVM)
         {
             var user = await _userManager.GetUserAsync(User);
 
@@ -87,7 +92,7 @@ namespace FoodOrderApp.Controllers
             {
                 ModelState.Clear();
                 // Kiểm tra Current Password
-                var result = await _userManager.CheckPasswordAsync(user, editProfileVM.PasswordInfo.CurrentPassword);
+                var result = await _userManager.CheckPasswordAsync(user, editProfileVM.EditProfileViewModel.PasswordInfo.CurrentPassword);
 
                 if (!result)
                 {
@@ -96,14 +101,14 @@ namespace FoodOrderApp.Controllers
                 }
 
                 // Kiểm tra New Password == Confirm Password
-                if (editProfileVM.PasswordInfo.NewPassword != editProfileVM.PasswordInfo.ConfirmPassword)
+                if (editProfileVM.EditProfileViewModel.PasswordInfo.NewPassword != editProfileVM.EditProfileViewModel.PasswordInfo.ConfirmPassword)
                 {
                     ModelState.AddModelError("PasswordInfo", "Mật khẩu mới và xác nhận mật khẩu không khớp!");
                     return View("Index", await BuildEditProfileViewModel());
                 }
 
                 // Đổi mật khẩu
-                var changePasswordResult = await _userManager.ChangePasswordAsync(user, editProfileVM.PasswordInfo.CurrentPassword, editProfileVM.PasswordInfo.NewPassword);
+                var changePasswordResult = await _userManager.ChangePasswordAsync(user, editProfileVM.EditProfileViewModel.PasswordInfo.CurrentPassword, editProfileVM.EditProfileViewModel.PasswordInfo.NewPassword);
 
                 if (changePasswordResult.Succeeded)
                 {
